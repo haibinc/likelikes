@@ -1,9 +1,12 @@
-import React from 'react';
+import {useNavigate} from "react-router-dom";
 
-function ChangeWeb() {
-    return (
-        <div></div>
-    );
+export function ChangeWeb() {
+    const navigate = useNavigate();
+
+    const changeWeb = (path:string) =>
+    {
+        navigate(path);
+    }
+
+    return changeWeb;
 }
-
-export default ChangeWeb;

@@ -1,14 +1,13 @@
 import React from 'react';
 import {ChangeWeb} from "../Components/ChangeWeb";
 
-function Home() {
+function LoginPage() {
     const redirect = ChangeWeb();
-
     return (
         <div>
-            <button onClick={()=>redirect('/loginpage')}> HOME </button>
+            <button onClick={()=>redirect('/home')}>LOGIN</button>
         </div>
     );
 }
 
-export default Home;
+export default LoginPage;
