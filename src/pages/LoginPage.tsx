@@ -1,11 +1,17 @@
 import React from 'react';
-import {ChangeWeb} from "../Components/ChangeWeb";
 
 function LoginPage() {
-    const redirect = ChangeWeb();
+
     return (
-        <div>
-            <button onClick={()=>redirect('/home')}>LOGIN</button>
+        <div className="CenterContainer">
+            <form className="FormContainer">
+                <h1> Welcome to Pinterest</h1>
+                <label htmlFor='Email'> <b>Email</b> </label>
+                <input type='email' placeholder='Enter Email' name="Email"/>
+
+                <label> <b>Password</b></label>
+                <input type='password' placeholder='Enter Password' name="Password"/>
+            </form>
         </div>
     );
 }

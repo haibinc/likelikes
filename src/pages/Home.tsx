@@ -1,12 +1,22 @@
 import React from 'react';
-import {ChangeWeb} from "../Components/ChangeWeb";
+import {useState} from 'react';
+import LoginPage from './LoginPage';
 
 function Home() {
-    const redirect = ChangeWeb();
+
+    const [showForm, setShowForm] = useState(false);
+
+    const displayLogin = () =>
+    {
+        setShowForm((prev) => !prev);
+    }
 
     return (
         <div>
-            <button onClick={()=>redirect('/loginpage')}> HOME </button>
+            <button className="LoginButton" onMouseEnter={(e) => (e.target as HTMLButtonElement).style.cursor = 'pointer'} onClick={displayLogin}> Log in </button>
+            <div style={{display: showForm? 'block' : 'none'}}>
+                <LoginPage/>
+            </div>
         </div>
     );
 }
