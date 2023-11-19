@@ -13,7 +13,7 @@ function Home() {
 
     return (
         <div>
-            <button className="LoginButton" onMouseEnter={(e) => (e.target as HTMLButtonElement).style.cursor = 'pointer'} onClick={displayLogin}> Log in </button>
+            <button className="CustomButton1" onClick={displayLogin}> Log in </button>
             <div style={{display: showForm? 'block' : 'none'}}>
                 <LoginPage/>
             </div>
