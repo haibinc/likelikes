@@ -12,7 +12,7 @@ function LoginPage() {
                 <label> <b>Password</b></label>
                 <input type='password' placeholder='Enter Password' name="Password"/>
 
-                <button style={{marginTop:'3rem'}} className="CustomButton1">Log In</button>
+                <button style={{marginTop:'3rem'}} onClick={(e) => e.preventDefault()} className="CustomButton1">Log In</button>
             </form>
         </div>
     );
