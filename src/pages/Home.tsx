@@ -13,7 +13,9 @@ function Home() {
 
     return (
         <div>
-            <button className="CustomButton1" onClick={displayLogin}> Log in </button>
+            <div style={{display:'flex', justifyContent:'flex-end', marginRight:'10rem', marginTop:'1rem'}}>
+                <button className="CustomButton1" onClick={displayLogin}> Log in </button>
+            </div>
             <div style={{display: showForm? 'block' : 'none'}}>
                 <LoginPage/>
             </div>
