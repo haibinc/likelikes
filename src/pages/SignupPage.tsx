@@ -1,27 +1,28 @@
 import React from 'react';
 import {useState} from 'react';
 
-function LoginPage() {
+function SignupPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [salt, setSalt] = useState('');
     const [statusMessage, setStatusMessage] = useState('');
     const [passwordMessage, setPasswordMessage] = useState('');
 
     let login = {
         email: email,
         password: password,
-        salt: '1234'
+        salt: salt,
     }
 
     const submitForm = async(e: React.SyntheticEvent) => {
         e.preventDefault();
         const baseUrl = 'http://localhost:3001';
         try{
-            const res = await fetch(`${baseUrl}/submitLogin`, {
-                    method: 'POST',
-                    mode: 'cors',
-                    body: JSON.stringify(login),
-                    headers: {
+            const res = await fetch(`${baseUrl}/submitSignup`, {
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify(login),
+                headers: {
                     'Content-Type': 'application/json',
                 },
             })
@@ -73,10 +74,10 @@ function LoginPage() {
                 <h3 style={{display: (passwordMessage !== '')? 'inline' : 'none', fontSize: '0.5rem',
                     color:'red', textAlign: 'left', marginLeft:'0.5rem',
                 }}> {passwordMessage} </h3>
-                <button style={{marginTop:'3rem', alignSelf:'center'}} onClick={submitForm} className="CustomButton1">Log In</button>
+                <button style={{marginTop:'3rem', alignSelf:'center'}} onClick={submitForm} className="CustomButton1">Sign up</button>
             </form>
         </div>
     );
 }
 
-export default LoginPage;
+export default SignupPage;

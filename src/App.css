@@ -6,12 +6,13 @@
 .CustomButton1{
   border-Radius:2rem;
   border:none;
-  height:2rem;
-  width:4rem;
+  min-height:2rem;
+  max-width:8rem;
   font-Size:1rem;
   color:white;
   background-color:red;
-  font-Weight: bold
+  font-Weight: bold;
+  margin-Left: 1rem;
 }
 
 .CustomButton1:hover{
