@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const saltRounds = 11;
 const validator = require('validator');
 
@@ -42,6 +44,11 @@ const hashPassword = async (password) => {
     } catch (error) {
         console.error('error', error);
     }
+}
+
+const generateJWTSecret = async() => {
+    const secretLength = 64;
+    return crypto.randomBytes(secretLength).toString('hex');
 }
 
 const checkHashedPassword = async(inputPassword, hashedPassword) => {
@@ -97,11 +104,13 @@ app.post('/submitLogin', async (req, res) => {
         }
         const sqlSelect = "SELECT * FROM login WHERE username = ?";
         const [rows, fields] = await db.execute(sqlSelect, [req.body.email]);
-        const checkPass = await checkHashedPassword(req.body.password, rows[0].password);
         if (rows.length > 0) {
+            const checkPass = await checkHashedPassword(req.body.password, rows[0].password);
             if(checkPass)
             {
-                return res.status(200).send('Log in successful');
+                const secretKey = await generateJWTSecret();
+                const token = jwt.sign({ userId: rows[0].userid, email: rows[0].username}, secretKey, { expiresIn: '1h' });
+                return res.status(200).json({token, userId: rows[0].userid});
             }
             else if(!checkPass)
             {

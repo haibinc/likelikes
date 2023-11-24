@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from 'react';
 import {useReducer} from 'react';
-import {userPassForms, Action, changeForm} from '../types/form';
+import {userPassForms, changeForm} from '../types/form';
 
 
 function SignupPage() {

@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from 'react';
 import {useReducer} from 'react';
-import {Action, userPassForms, changeForm} from '../types/form';
+import {userPassForms, changeForm} from '../types/form';
 
 function LoginPage() {
     let loginForm:userPassForms = {
@@ -32,6 +32,9 @@ function LoginPage() {
             })
             if(res.ok)
             {
+                const {token, userId} = await res.json();
+                localStorage.setItem('token', token);
+                localStorage.setItem('userId', userId);
                 dispatch({type:'SET_FIELD', field:'emailMessage', value:''});
                 dispatch({type:'SET_FIELD', field:'passwordMessage', value:''});
                 dispatch({type:'SET_FIELD', field:'successMessage', value:'Successful Login'});
@@ -43,10 +46,12 @@ function LoginPage() {
                 if(errorCode === 'Email not found')
                 {
                     dispatch({type:'SET_FIELD', field:'emailMessage', value:errorCode});
+                    dispatch({type:'SET_FIELD', field:'passwordMessage', value:''});
                     dispatch({type:'SET_FIELD', field:'successMessage', value:''});
                 }
                 else if(errorCode === 'Password incorrect')
                 {
+                    dispatch({type:'SET_FIELD', field:'emailMessage', value:''});
                     dispatch({type:'SET_FIELD', field:'passwordMessage', value:errorCode});
                     dispatch({type:'SET_FIELD', field:'successMessage', value:''});
                 }
