@@ -19,6 +19,10 @@
   cursor: pointer;
 }
 
+.CustomButton1:active{
+  color:blue;
+}
+
 .CenterContainer {
   display: flex;
   justify-content: center;

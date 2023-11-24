@@ -38,6 +38,9 @@ function LoginPage() {
                 dispatch({type:'SET_FIELD', field:'emailMessage', value:''});
                 dispatch({type:'SET_FIELD', field:'passwordMessage', value:''});
                 dispatch({type:'SET_FIELD', field:'successMessage', value:'Successful Login'});
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
             }
             else if(!res.ok)
             {

@@ -8,6 +8,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const saltRounds = 11;
+let secretKey = '';
 const validator = require('validator');
 
 app.use(cors());
@@ -46,10 +47,12 @@ const hashPassword = async (password) => {
     }
 }
 
-const generateJWTSecret = async() => {
+const generateJWTSecret = () => {
     const secretLength = 64;
     return crypto.randomBytes(secretLength).toString('hex');
 }
+
+secretKey = generateJWTSecret();
 
 const checkHashedPassword = async(inputPassword, hashedPassword) => {
     try {
@@ -108,7 +111,6 @@ app.post('/submitLogin', async (req, res) => {
             const checkPass = await checkHashedPassword(req.body.password, rows[0].password);
             if(checkPass)
             {
-                const secretKey = await generateJWTSecret();
                 const token = jwt.sign({ userId: rows[0].userid, email: rows[0].username}, secretKey, { expiresIn: '1h' });
                 return res.status(200).json({token, userId: rows[0].userid});
             }
@@ -126,8 +128,25 @@ app.post('/submitLogin', async (req, res) => {
         console.error('Error:', err);
         return res.status(500).send('Internal Server Error');
     }
-
 })
+
+const validateToken = (req, res, next) => {
+    const token = req.headers.authorization;
+    if (!token) {
+        console.log('first');
+        return res.status(401).json({ message: 'Unauthorized - Missing token' });
+    }
+    try {
+        const decoded = jwt.verify(token, secretKey);
+        next();
+    } catch (error) {
+        return res.status(401).json({ message: 'Unauthorized - Invalid token' });
+    }
+};
+
+app.get('/checkToken', validateToken, (req, res) => {
+    res.status(200).json({ message: 'Auth Sucess'});
+});
 
 const PORT = Number.parseInt(process.env.PORT) || 3001;
 app.listen(PORT, () => {
