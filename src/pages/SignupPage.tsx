@@ -1,17 +1,22 @@
-import React from 'react';
-import {useState} from 'react';
+import React, {ChangeEvent} from 'react';
+import {useReducer} from 'react';
+import {userPassForms, Action, changeForm} from '../types/form';
+
 
 function SignupPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [salt, setSalt] = useState('');
-    const [statusMessage, setStatusMessage] = useState('');
-    const [passwordMessage, setPasswordMessage] = useState('');
+    let signupForm:userPassForms = {
+        email: '',
+        password: '',
+        salt: '',
+        emailMessage:'',
+        passwordMessage:'',
+        successMessage:''
+    }
 
-    let login = {
-        email: email,
-        password: password,
-        salt: salt,
+    const [state, dispatch] = useReducer(changeForm, signupForm);
+
+    const handleChange = (props: ChangeEvent<HTMLInputElement>) => {
+        dispatch({type:'SET_FIELD', field:props.target.name, value:props.target.value});
     }
 
     const submitForm = async(e: React.SyntheticEvent) => {
@@ -21,37 +26,42 @@ function SignupPage() {
             const res = await fetch(`${baseUrl}/submitSignup`, {
                 method: 'POST',
                 mode: 'cors',
-                body: JSON.stringify(login),
+                body: JSON.stringify(state),
                 headers: {
                     'Content-Type': 'application/json',
                 },
             })
             if(res.ok)
             {
-                console.log('insertion successful');
-                setStatusMessage('');
-                setPasswordMessage('');
+                console.log('signup success');
+                dispatch({type:'SET_FIELD', field:'emailMessage', value:''});
+                dispatch({type:'SET_FIELD', field:'passwordMessage', value:''});
+                dispatch({type:'SET_FIELD', field:'successMessage', value:'Successful Signup'});
             }
             else if(!res.ok)
             {
                 const errorCode = await res.text();
                 console.log(errorCode);
                 if(errorCode === 'This email already exists.') {
-                    setStatusMessage(errorCode);
-                    setPasswordMessage('');
+                    dispatch({type:'SET_FIELD', field:'emailMessage', value:errorCode});
+                    dispatch({type:'SET_FIELD', field:'passwordMessage', value:''});
+                    dispatch({type:'SET_FIELD', field:'successMessage', value:''});
                 }
                 else if(errorCode === 'Email/password is too long') {
-                    setStatusMessage(errorCode);
-                    setPasswordMessage('');
+                    dispatch({type:'SET_FIELD', field:'emailMessage', value:errorCode});
+                    dispatch({type:'SET_FIELD', field:'passwordMessage', value:''});
+                    dispatch({type:'SET_FIELD', field:'successMessage', value:''});
                 }
                 else if(errorCode === 'Not a valid email address.') {
-                    setStatusMessage(errorCode);
-                    setPasswordMessage('');
+                    dispatch({type:'SET_FIELD', field:'emailMessage', value:errorCode});
+                    dispatch({type:'SET_FIELD', field:'passwordMessage', value:''});
+                    dispatch({type:'SET_FIELD', field:'successMessage', value:''});
                 }
-                else if(errorCode === 'Passwords must be at least 6 characters and must contain one lowercase letter, one uppercase letter, and one number.'){
-                    setPasswordMessage(errorCode);
+                else if(errorCode === 'Passwords must be at least 8-20 characters and must contain one lowercase letter, one uppercase letter, and one number.'){
+                    dispatch({type:'SET_FIELD', field:'emailMessage', value:''});
+                    dispatch({type:'SET_FIELD', field:'passwordMessage', value:errorCode});
+                    dispatch({type:'SET_FIELD', field:'successMessage', value:''});
                 }
-
             }
         }
         catch(error){
@@ -62,18 +72,21 @@ function SignupPage() {
     return (
         <div className="CenterContainer">
             <form method="POST" className="FormContainer">
-                <h1> Welcome to Pinterest</h1>
+                <h1> Welcome to Likelikes</h1>
                 <label htmlFor='Email'> <b>Email</b> </label>
-                <input onChange={(e) => setEmail(e.target.value)} type='email' placeholder='Enter Email' name="Email" required={true}/>
-                <h3 style={{display: (statusMessage !== '')? 'inline' : 'none', fontSize: '0.5rem',
+                <input onChange={handleChange} type='email' placeholder='Enter Email' name="email" required={true}/>
+                <h3 style={{display: (state.emailMessage !== '')? 'inline' : 'none', fontSize: '0.5rem',
                     color:'red', textAlign: 'left', marginLeft:'0.5rem',
-                }}> {statusMessage} </h3>
+                }}> {state.emailMessage} </h3>
 
                 <label> <b>Password</b></label>
-                <input onChange={(e) => setPassword(e.target.value)} type='password' placeholder='Enter Password' name="Password" required={true}/>
-                <h3 style={{display: (passwordMessage !== '')? 'inline' : 'none', fontSize: '0.5rem',
+                <input onChange={handleChange} type='password' placeholder='Enter Password' name="password" required={true}/>
+                <h3 style={{display: (state.passwordMessage !== '')? 'inline' : 'none', fontSize: '0.5rem',
                     color:'red', textAlign: 'left', marginLeft:'0.5rem',
-                }}> {passwordMessage} </h3>
+                }}> {state.passwordMessage} </h3>
+                <h3 style={{display: (state.successMessage !== '')? 'inline' : 'none', fontSize: '0.95rem',
+                    color:'darkblue', textAlign: 'left', marginLeft:'0.5rem',
+                }}> {state.successMessage} </h3>
                 <button style={{marginTop:'3rem', alignSelf:'center'}} onClick={submitForm} className="CustomButton1">Sign up</button>
             </form>
         </div>
