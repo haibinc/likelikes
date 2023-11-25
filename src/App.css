@@ -52,6 +52,41 @@
   border-radius: 1.3rem;
 }
 
+.FormContainer input[type=title]{
+  padding: 0.5rem;
+  height: 2rem;
+  border-radius: 1.3rem;
+}
+
+.FormContainer textarea{
+  padding: 0.5rem;
+  height: 7rem;
+  width: 37vw;
+  border-radius: 1rem;
+}
+
 .FormContainer input[type=email]:focus, .FormContainer input[type=password]:focus{
   border-color:lightblue;
+}
+
+.my-masonry-grid {
+  display: flex;
+  margin-left: -10px;
+  width: auto;
+  padding-top: 20px;
+}
+
+.my-masonry-grid_column {
+  display: flex;
+  flex-direction:column;
+  gap:20px;
+  margin-left: 30px;
+  background-clip: padding-box;
+}
+
+.my-masonry-grid_column img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit:cover;
 }
