@@ -64,11 +64,19 @@ const checkHashedPassword = async(inputPassword, hashedPassword) => {
     }
 }
 
-const db = mysql.createPool({
+const dbLogin = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: process.env.REACT_APP_MYSQL_PASSWORD,
     database: 'DATABASE',
+    connectionLimit: 10,
+})
+
+const dbImages = mysql.createPool({
+    host: 'localhost',
+    user: 'root',
+    password: process.env.REACT_APP_MYSQL_PASSWORD,
+    database: 'pictures',
     connectionLimit: 10,
 })
 
@@ -85,7 +93,7 @@ app.post('/submitSignup', async (req, res) => {
 
         const sqlInsert = "INSERT INTO login (username, password, salt) VALUES (?, ?, ?)";
         const values = [req.body.email, req.body.password, req.body.salt];
-        const [row, fields] = await db.execute(sqlInsert, values);
+        const [row, fields] = await dbLogin.execute(sqlInsert, values);
         return res.status(200).send('Insertion Successful');
     } catch (err) {
         if (err.code === 'ER_DUP_ENTRY') {
@@ -106,7 +114,7 @@ app.post('/submitLogin', async (req, res) => {
             return res.status(400).send('Passwords must be at least 8-20 characters and must contain one lowercase letter, one uppercase letter, and one number.');
         }
         const sqlSelect = "SELECT * FROM login WHERE username = ?";
-        const [rows, fields] = await db.execute(sqlSelect, [req.body.email]);
+        const [rows, fields] = await dbLogin.execute(sqlSelect, [req.body.email]);
         if (rows.length > 0) {
             const checkPass = await checkHashedPassword(req.body.password, rows[0].password);
             if(checkPass)
@@ -147,6 +155,18 @@ const validateToken = (req, res, next) => {
 app.get('/checkToken', validateToken, (req, res) => {
     res.status(200).json({ message: 'Auth Sucess'});
 });
+
+app.post('/submitPicture', async(req,res) => {
+    try {
+        const sqlInsert = "INSERT INTO images (id, file_name, file_type, picTitle, pictDescription, data) VALUES (?, ?, ?, ?, ?, ?)";
+        const values = [req.body.id, req.body.file_name, req.body.file_type, req.body.picTitle, req.body.pictDescription, req.body.data];
+        const [rows, fields] = await dbImages.execute(sqlInsert, values);
+        return res.status(200).send('Insertion Successful');
+    }catch(error){
+        console.log('error', error);
+        return res.status(500).send('Internal Server Error');
+    }
+})
 
 const PORT = Number.parseInt(process.env.PORT) || 3001;
 app.listen(PORT, () => {

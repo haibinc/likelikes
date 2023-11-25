@@ -7,6 +7,15 @@ export interface userPassForms{
     successMessage:string,
 }
 
+export interface pictureForm{
+    id: number,
+    file_name: string,
+    file_type: string,
+    picTitle: string,
+    pictDescription: string,
+    data: string,
+}
+
 export type Action =  {type: 'SET_FIELD'; field: string; value: string }
 
 export const changeForm = (state:userPassForms, action: Action) => {

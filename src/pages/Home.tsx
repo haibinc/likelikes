@@ -59,6 +59,9 @@ function Home() {
             </div>
             <div style={{display: isAuth ? 'block' : 'none'}}>
                 <div style={{display: 'flex', justifyContent:'flex-end'}}>
+                    <button style={{marginTop:'1.75rem', height:'2rem', alignSelf: 'start', position:'fixed', left:'1rem', backgroundColor: 'peru'}} onClick={() => redirect('/home')}
+                            className="CustomButton1">Home
+                    </button>
                     <button className="CustomButton1" onClick={()=> redirect('/create')} style={{backgroundColor: 'sienna', minWidth: '4.5rem', marginTop:'1.75rem', marginRight:'25vw', height:'2rem'}}>
                         CREATE
                     </button>

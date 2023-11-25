@@ -34,6 +34,7 @@ function LoginPage() {
             {
                 const {token, userId} = await res.json();
                 localStorage.setItem('token', token);
+                localStorage.setItem('userId', userId);
                 dispatch({type:'SET_FIELD', field:'emailMessage', value:''});
                 dispatch({type:'SET_FIELD', field:'passwordMessage', value:''});
                 dispatch({type:'SET_FIELD', field:'successMessage', value:'Successful Login'});

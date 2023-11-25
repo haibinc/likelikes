@@ -11,7 +11,7 @@ async function Authenticate() {
                     Authorization: `${token}`,
                 },
             });
-            if (response.ok) {
+            if(response.ok) {
                return true
             } else {
                return false
