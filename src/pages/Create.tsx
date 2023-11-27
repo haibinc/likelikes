@@ -10,14 +10,6 @@ function Create() {
     const [picDescription, setPicDescription] = useState({picTitle:'', pictDescription:''})
     const [file, setFile] = useState<File | undefined>();
     const [imgSource, setImgSource] = useState<string | undefined>();
-    // let picForm: pictureForm = {
-    //     id: parseInt(localStorage.getItem('userId') || '') || 0,
-    //     file_name: selectedFile?.name || '',
-    //     file_type: selectedFile?.type || '',
-    //     picTitle: picDescription.title,
-    //     pictDescription: picDescription.description,
-    //     data: previewUrl || ''
-    // }
 
     useEffect(() => {
         const checkAuthentication = async () => {
@@ -43,8 +35,6 @@ function Create() {
 
     const submitForm = async (e: React.SyntheticEvent) => {
         e.preventDefault();
-        console.log(picDescription.picTitle);
-        console.log('go')
         const formData = new FormData();
         if(file){
             formData.append("image", file);
@@ -62,8 +52,7 @@ function Create() {
                 })
                 if (res.ok) {
                     const message = await res.text();
-                    console.log(message);
-                    // redirect('/home')
+                    redirect('/home')
                 } else {
                     console.log(res.status);
                 }

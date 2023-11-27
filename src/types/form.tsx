@@ -8,12 +8,11 @@ export interface userPassForms{
 }
 
 export interface pictureForm{
-    id: number,
-    file_name: string,
-    file_type: string,
+    created: string,
+    image_Name: string,
+    imageUrl: string,
+    picDescription: string,
     picTitle: string,
-    pictDescription: string,
-    data: string,
 }
 
 export type Action =  {type: 'SET_FIELD'; field: string; value: string }

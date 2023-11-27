@@ -8,7 +8,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const {S3Client, PutObjectCommand} = require('@aws-sdk/client-s3');
+const {S3Client, PutObjectCommand, GetObjectCommand} = require('@aws-sdk/client-s3');
 const {getSignedUrl} = require('@aws-sdk/s3-request-presigner');
 const saltRounds = 11;
 let secretKey = '';
@@ -167,21 +167,46 @@ app.get('/checkToken', validateToken, (req, res) => {
 
 app.post('/submitPicture', upload.single('image'),async (req, res) => {
     try{
+        const imageName = generateImageName();
         const params = {
             Bucket: process.env.REACT_APP_BUCKET_NAME,
-            Key: generateImageName(),
+            Key: imageName,
             Body: req.file.buffer,
             ContentType: req.file.mimetype,
         }
         const command = new PutObjectCommand(params)
         await s3.send(command);
-        const sqlInsert = "INSERT into imagedatas (picTitle, picDescription) VALUES (?,?)";
-        const values = [req.body.picTitle, req.body.picDescription];
+        const sqlInsert = "INSERT into imagedatas (picTitle, picDescription, imageName, created) VALUES (?,?,?,CURRENT_TIMESTAMP)";
+        const values = [req.body.picTitle, req.body.picDescription, imageName];
         const [rows, fields] = await dbImages.execute(sqlInsert, values);
         return res.status(200).send('Submission Success');
     }catch(err){
         console.error(err);
     }
+})
+
+app.get('/getImagePosts', async(req,res) => {
+    try{
+        const [rows] = await dbImages.execute('SELECT * FROM imagedatas ORDER BY created DESC');
+
+        if(rows){
+            for(let post of rows){
+                const params = {
+                    Bucket: process.env.REACT_APP_BUCKET_NAME,
+                    Key: post.imageName,
+                }
+                const command = new GetObjectCommand(params);
+                const url = await getSignedUrl(s3, command, {expiredIn: 3600});
+                post.imageUrl = url;
+            }
+            console.log(rows);
+            res.send(rows);
+        }
+    }catch(err)
+    {
+        console.error('error getting image posts: ', err)
+    }
+
 })
 
 const PORT = Number.parseInt(process.env.PORT) || 3001;
