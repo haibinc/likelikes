@@ -93,9 +93,9 @@ function Create() {
                               required={picDescription.pictDescription !== ''}
                               disabled={!isFileSelected}/>
                         <button style={{marginTop: '3rem', alignSelf: 'center',
-                            backgroundColor: (picDescription.picTitle == '' || picDescription.pictDescription == '')? 'gray' : 'red',
-                            cursor: (picDescription.picTitle == '' || picDescription.pictDescription == '')? 'default' : 'pointer'}}
-                                onClick={submitForm} aria-required={picDescription.picTitle !== '' && picDescription.pictDescription !== ''} disabled={picDescription.picTitle == '' || picDescription.pictDescription == ''}
+                            backgroundColor: (picDescription.picTitle === '' || picDescription.pictDescription === '')? 'gray' : 'red',
+                            cursor: (picDescription.picTitle === '' || picDescription.pictDescription === '')? 'default' : 'pointer'}}
+                                onClick={submitForm} aria-required={picDescription.picTitle !== '' && picDescription.pictDescription !== ''} disabled={picDescription.picTitle === '' || picDescription.pictDescription === ''}
                             className="CustomButton1">Publish
                     </button>
                 </form>

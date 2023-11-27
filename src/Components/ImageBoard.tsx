@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { pictureForm } from '../types/form';
 import Masonry from 'react-masonry-css';
-import {Buffer} from 'buffer';
 
 const breakpointColumnsObj = {
     default: 4,
@@ -12,10 +11,6 @@ const breakpointColumnsObj = {
 function ImageBoard() {
     const [images, setImages] = useState<pictureForm[]>([]);
     const baseUrl = 'https://likelikes-867512b88371.herokuapp.com';
-
-    let picForm = {
-        id: parseInt(localStorage.getItem('userId') || '') || 0,
-    };
 
     useEffect(() => {
 
