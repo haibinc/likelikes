@@ -199,7 +199,6 @@ app.get('/getImagePosts', async(req,res) => {
                 const url = await getSignedUrl(s3, command, {expiredIn: 3600});
                 post.imageUrl = url;
             }
-            console.log(rows);
             res.send(rows);
         }
     }catch(err)
