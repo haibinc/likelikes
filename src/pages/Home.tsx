@@ -4,6 +4,7 @@ import LoginPage from './LoginPage';
 import SignupPage from "./SignupPage";
 import Authenticate from "../Components/Authenticate";
 import {ChangeWeb} from "../Components/ChangeWeb";
+import ImageBoard from "../Components/ImageBoard";
 
 function Home() {
     const redirect = ChangeWeb();
@@ -69,6 +70,9 @@ function Home() {
                     <button className="CustomButton1" onClick={signOut}
                             style={{backgroundColor: 'mediumaquamarine', minWidth: '4.5rem', marginTop:'1.75rem', marginRight:'2rem', height:'2rem'}}> Sign Out
                     </button>
+                </div>
+                <div>
+                    <ImageBoard></ImageBoard>
                 </div>
             </div>
         </div>

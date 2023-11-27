@@ -2,31 +2,22 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import Authenticate from "../Components/Authenticate";
 import {ChangeWeb} from '../Components/ChangeWeb';
 import {pictureForm} from '../types/form';
-import Masonry from "react-masonry-css";
-
-
-const breakpointColumnsObj = {
-    default: 4,
-    1100: 2,
-    700: 1,
-};
 
 function Create() {
     const redirect = ChangeWeb();
-    const [isAuth, setIsAuth] = useState<boolean | undefined>(undefined);
+    const [isAuth, setIsAuth] = useState< boolean | undefined>(undefined);
     const [isFileSelected, setIsFileSelected] = useState(false);
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
-    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-    const [picDescription, setPicDescription] = useState({title: '', description: ''});
-
-    let picForm: pictureForm = {
-        id: parseInt(localStorage.getItem('userId') || '') || 0,
-        file_name: selectedFile?.name || '',
-        file_type: selectedFile?.type || '',
-        picTitle: picDescription.title,
-        pictDescription: picDescription.description,
-        data: previewUrl || ''
-    }
+    const [picDescription, setPicDescription] = useState({picTitle:'', pictDescription:''})
+    const [file, setFile] = useState<File | undefined>();
+    const [imgSource, setImgSource] = useState<string | undefined>();
+    // let picForm: pictureForm = {
+    //     id: parseInt(localStorage.getItem('userId') || '') || 0,
+    //     file_name: selectedFile?.name || '',
+    //     file_type: selectedFile?.type || '',
+    //     picTitle: picDescription.title,
+    //     pictDescription: picDescription.description,
+    //     data: previewUrl || ''
+    // }
 
     useEffect(() => {
         const checkAuthentication = async () => {
@@ -41,15 +32,10 @@ function Create() {
 
     const handleFileInput = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
-
-        if (file) {
+        if(file){
+            setFile(file);
             const reader = new FileReader();
-
-            reader.onloadend = () => {
-                setSelectedFile(file);
-                setPreviewUrl(reader.result as string);
-                setIsFileSelected(true);
-            };
+            reader.onloadend = () => setImgSource(reader.result as string);
             reader.readAsDataURL(file);
         }
         setIsFileSelected((prev) => !prev);
@@ -57,20 +43,29 @@ function Create() {
 
     const submitForm = async (e: React.SyntheticEvent) => {
         e.preventDefault();
+        console.log(picDescription.picTitle);
+        console.log('go')
+        const formData = new FormData();
+        if(file){
+            formData.append("image", file);
+            formData.append("picTitle", picDescription.picTitle);
+            formData.append("picDescription", picDescription.pictDescription);
+        }
+
         if (await Authenticate()) {
             const baseUrl = 'http://localhost:3001';
             try {
                 const res = await fetch(`${baseUrl}/submitPicture`, {
                     method: 'POST',
                     mode: 'cors',
-                    body: JSON.stringify(picForm),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
+                    body: formData,
                 })
                 if (res.ok) {
-
+                    const message = await res.text();
+                    console.log(message);
+                    // redirect('/home')
                 } else {
+                    console.log(res.status);
                 }
             } catch (err) {
                 console.error('error', err);
@@ -81,13 +76,11 @@ function Create() {
     }
 
     const handleDescription = (props: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setPicDescription({...picDescription, description: props.target.value});
-        console.log(picDescription.description);
+        setPicDescription({...picDescription, pictDescription: props.target.value});
     }
 
     const handleTitle = (props: React.ChangeEvent<HTMLInputElement>) => {
-        setPicDescription({...picDescription, title: props.target.value});
-        console.log(picDescription.title);
+        setPicDescription({...picDescription, picTitle: props.target.value});
     }
 
 
@@ -101,22 +94,25 @@ function Create() {
             <div>
                 <h1>CREATE</h1>
                 <input type='file' accept="image/*" onChange={handleFileInput}/>
-                <form className="FormContainer" style={{float: 'right', marginRight: '300px'}}>
+                <form className="FormContainer" method="POST" encType="multipart/form-data" style={{float: 'right', marginRight: '300px'}}>
                     <label htmlFor="title">Title</label>
                     <input type='title' placeholder='Add a title' onChange={handleTitle} name="title"
-                           required={!isFileSelected}
+                           required={picDescription.picTitle !== ''}
                            disabled={!isFileSelected}/>
                     <label htmlFor="description">Description</label>
                     <textarea placeholder='Add a detailed description' onChange={handleDescription} name="description"
-                              required={!isFileSelected}
+                              required={picDescription.pictDescription !== ''}
                               disabled={!isFileSelected}/>
-                    <button style={{marginTop: '3rem', alignSelf: 'center'}} onClick={submitForm}
+                        <button style={{marginTop: '3rem', alignSelf: 'center',
+                            backgroundColor: (picDescription.picTitle == '' || picDescription.pictDescription == '')? 'gray' : 'red',
+                            cursor: (picDescription.picTitle == '' || picDescription.pictDescription == '')? 'default' : 'pointer'}}
+                                onClick={submitForm} aria-required={picDescription.picTitle !== '' && picDescription.pictDescription !== ''} disabled={picDescription.picTitle == '' || picDescription.pictDescription == ''}
                             className="CustomButton1">Publish
                     </button>
                 </form>
             </div>
             <div>
-                <img src={previewUrl!}
+                <img src={imgSource}
                      style={{height: '10rem', width: '12rem', marginTop: '3rem', borderRadius: '2.5rem'}}/>
             </div>
         </div>

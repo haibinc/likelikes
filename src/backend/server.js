@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer');
 const app = express();
 const mysql = require('mysql2/promise');
 const bodyParser = require('body-parser');
@@ -7,15 +8,27 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const {S3Client, PutObjectCommand} = require('@aws-sdk/client-s3');
+const {getSignedUrl} = require('@aws-sdk/s3-request-presigner');
 const saltRounds = 11;
 let secretKey = '';
 const validator = require('validator');
+const storage = multer.memoryStorage();
+const upload = multer({storage: storage});
 
 app.use(cors());
 app.use(express.json());
 // app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.text());
 dotenv.config();
+
+const s3 = new S3Client({
+    credentials:{
+        accessKeyId: process.env.REACT_APP_ACCESS_KEY,
+        secretAccessKey: process.env.REACT_APP_SECRET_KEY,
+    },
+    region: process.env.REACT_APP_BUCKET_REGION
+});
 
 const isValidPassword = (password) => {
     const hasMinLength = password.length >= 8;
@@ -30,7 +43,7 @@ const isValidPassword = (password) => {
     const hasDigit = /\d/.test(password);
 
     // Return true if all criteria are met
-    return hasMinLength &&hasMaxLength && hasUpperCase && hasLowerCase && hasDigit;
+    return hasMinLength && hasMaxLength && hasUpperCase && hasLowerCase && hasDigit;
 }
 
 const isValidEmail = (email) => {
@@ -52,9 +65,11 @@ const generateJWTSecret = () => {
     return crypto.randomBytes(secretLength).toString('hex');
 }
 
+const generateImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex');
+
 secretKey = generateJWTSecret();
 
-const checkHashedPassword = async(inputPassword, hashedPassword) => {
+const checkHashedPassword = async (inputPassword, hashedPassword) => {
     try {
         const isMatch = await bcrypt.compare(inputPassword, hashedPassword);
         return isMatch;
@@ -76,7 +91,7 @@ const dbImages = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: process.env.REACT_APP_MYSQL_PASSWORD,
-    database: 'pictures',
+    database: 'IMAGEDATA',
     connectionLimit: 10,
 })
 
@@ -107,7 +122,7 @@ app.post('/submitSignup', async (req, res) => {
 })
 
 app.post('/submitLogin', async (req, res) => {
-    try{
+    try {
         if (!isValidEmail(req.body.email)) {
             return res.status(400).send('Not a valid email address.');
         } else if (!isValidPassword(req.body.password)) {
@@ -117,22 +132,16 @@ app.post('/submitLogin', async (req, res) => {
         const [rows, fields] = await dbLogin.execute(sqlSelect, [req.body.email]);
         if (rows.length > 0) {
             const checkPass = await checkHashedPassword(req.body.password, rows[0].password);
-            if(checkPass)
-            {
-                const token = jwt.sign({ userId: rows[0].userid, email: rows[0].username}, secretKey, { expiresIn: '1h' });
+            if (checkPass) {
+                const token = jwt.sign({userId: rows[0].userid, email: rows[0].username}, secretKey, {expiresIn: '1h'});
                 return res.status(200).json({token, userId: rows[0].userid});
-            }
-            else if(!checkPass)
-            {
+            } else if (!checkPass) {
                 return res.status(400).send('Password incorrect');
             }
-        }
-        else
-        {
+        } else {
             return res.status(400).send('Email not found');
         }
-    }
-    catch(err){
+    } catch (err) {
         console.error('Error:', err);
         return res.status(500).send('Internal Server Error');
     }
@@ -142,29 +151,36 @@ const validateToken = (req, res, next) => {
     const token = req.headers.authorization;
     if (!token) {
         console.log('first');
-        return res.status(401).json({ message: 'Unauthorized - Missing token' });
+        return res.status(401).json({message: 'Unauthorized - Missing token'});
     }
     try {
         const decoded = jwt.verify(token, secretKey);
         next();
     } catch (error) {
-        return res.status(401).json({ message: 'Unauthorized - Invalid token' });
+        return res.status(401).json({message: 'Unauthorized - Invalid token'});
     }
 };
 
 app.get('/checkToken', validateToken, (req, res) => {
-    res.status(200).json({ message: 'Auth Sucess'});
+    res.status(200).json({message: 'Auth Sucess'});
 });
 
-app.post('/submitPicture', async(req,res) => {
-    try {
-        const sqlInsert = "INSERT INTO images (id, file_name, file_type, picTitle, pictDescription, data) VALUES (?, ?, ?, ?, ?, ?)";
-        const values = [req.body.id, req.body.file_name, req.body.file_type, req.body.picTitle, req.body.pictDescription, req.body.data];
+app.post('/submitPicture', upload.single('image'),async (req, res) => {
+    try{
+        const params = {
+            Bucket: process.env.REACT_APP_BUCKET_NAME,
+            Key: generateImageName(),
+            Body: req.file.buffer,
+            ContentType: req.file.mimetype,
+        }
+        const command = new PutObjectCommand(params)
+        await s3.send(command);
+        const sqlInsert = "INSERT into imagedatas (picTitle, picDescription) VALUES (?,?)";
+        const values = [req.body.picTitle, req.body.picDescription];
         const [rows, fields] = await dbImages.execute(sqlInsert, values);
-        return res.status(200).send('Insertion Successful');
-    }catch(error){
-        console.log('error', error);
-        return res.status(500).send('Internal Server Error');
+        return res.status(200).send('Submission Success');
+    }catch(err){
+        console.error(err);
     }
 })
 
