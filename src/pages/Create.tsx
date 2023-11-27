@@ -43,7 +43,7 @@ function Create() {
         }
 
         if (await Authenticate()) {
-            const baseUrl = 'http://localhost:3001';
+            const baseUrl = 'https://likelikes-867512b88371.herokuapp.com';
             try {
                 const res = await fetch(`${baseUrl}/submitPicture`, {
                     method: 'POST',

@@ -11,7 +11,7 @@ const breakpointColumnsObj = {
 
 function ImageBoard() {
     const [images, setImages] = useState<pictureForm[]>([]);
-    const baseUrl = 'http://localhost:3001';
+    const baseUrl = 'https://likelikes-867512b88371.herokuapp.com';
 
     let picForm = {
         id: parseInt(localStorage.getItem('userId') || '') || 0,

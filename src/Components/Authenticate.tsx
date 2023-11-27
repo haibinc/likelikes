@@ -4,7 +4,7 @@ async function Authenticate() {
     const token = localStorage.getItem('token');
     if (token) {
         try {
-            const baseUrl = 'http://localhost:3001';
+            const baseUrl = 'https://likelikes-867512b88371.herokuapp.com';
             const response = await fetch(`${baseUrl}/checkToken`, {
                 method: 'GET',
                 headers: {
