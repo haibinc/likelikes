@@ -33,7 +33,7 @@ function ImageBoard() {
         };
         fetchImages();
     }, []);
-    console.log(images);
+
     return (
         <div>
             <Masonry
