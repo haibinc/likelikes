@@ -24,10 +24,10 @@ dotenv.config();
 
 const s3 = new S3Client({
     credentials:{
-        accessKeyId: process.env.REACT_APP_ACCESS_KEY,
-        secretAccessKey: process.env.REACT_APP_SECRET_KEY,
+        accessKeyId: 'AKIA6KZJMKD2P7KBNHOC',
+        secretAccessKey: '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',
     },
-    region: process.env.REACT_APP_BUCKET_REGION
+    region: 'us-west-1'
 });
 
 const isValidPassword = (password) => {
@@ -80,19 +80,21 @@ const checkHashedPassword = async (inputPassword, hashedPassword) => {
 }
 
 const dbLogin = mysql.createPool({
-    host: 'localhost',
+    host: 'tutorial-db-instance.cdi7glvucsme.us-west-1.rds.amazonaws.com',
     user: 'root',
-    password: process.env.REACT_APP_MYSQL_PASSWORD,
+    port: '3306',
+    password: '!Damkies33',
     database: 'DATABASE',
-    connectionLimit: 10,
+    connectionLimit: '10',
 })
 
 const dbImages = mysql.createPool({
-    host: 'localhost',
+    host: 'tutorial-db-instance.cdi7glvucsme.us-west-1.rds.amazonaws.com',
     user: 'root',
-    password: process.env.REACT_APP_MYSQL_PASSWORD,
+    port: '3306',
+    password: '!Damkies33',
     database: 'IMAGEDATA',
-    connectionLimit: 10,
+    connectionLimit: '10',
 })
 
 app.post('/submitSignup', async (req, res) => {
@@ -169,7 +171,7 @@ app.post('/submitPicture', upload.single('image'),async (req, res) => {
     try{
         const imageName = generateImageName();
         const params = {
-            Bucket: process.env.REACT_APP_BUCKET_NAME,
+            Bucket: 'likelikes',
             Key: imageName,
             Body: req.file.buffer,
             ContentType: req.file.mimetype,
@@ -192,7 +194,7 @@ app.get('/getImagePosts', async(req,res) => {
         if(rows){
             for(let post of rows){
                 const params = {
-                    Bucket: process.env.REACT_APP_BUCKET_NAME,
+                    Bucket: likelikes,
                     Key: post.imageName,
                 }
                 const command = new GetObjectCommand(params);
