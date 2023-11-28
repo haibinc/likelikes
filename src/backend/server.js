@@ -97,6 +97,28 @@ const dbLogin = mysql.createPool({
     connectionLimit: '10',
 })
 
+async function testDatabaseConnection() {
+    let connection;
+    try {
+        // Get a connection from the pool
+        connection = await dbLogin.getConnection();
+
+        // Execute a simple query to check the connection
+        const [rows, fields] = await connection.execute('SELECT 1');
+
+        // Log the result
+        console.log('Connection to the database successful:', rows);
+    } catch (error) {
+        console.error('Error connecting to the database:', error.message);
+    } finally {
+        // Release the connection back to the pool
+        if (connection) {
+            connection.release();
+        }
+    }
+}
+
+
 const dbImages = mysql.createPool({
     host: 'tutorial-db-instance.cdi7glvucsme.us-west-1.rds.amazonaws.com',
     user: 'root',
@@ -221,8 +243,8 @@ app.get('/getImagePosts', async(req,res) => {
 
 app.get("/", async (req, res) => {
     try {
-        console.log('can you at least console log something')
-        res.send('please bro just work please man');
+        res.send('thank you for working');
+        testDatabaseConnection();
     } catch (error) {
         res.send(error)
     }
