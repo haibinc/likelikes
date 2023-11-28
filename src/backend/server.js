@@ -212,6 +212,7 @@ dotenv.config();
 
 app.get("/", async (req, res) => {
     try {
+        console.log('can you at least console log something')
         res.send('please bro just work please man');
     } catch (error) {
         res.send(error)
