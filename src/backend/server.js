@@ -224,7 +224,7 @@ app.get("/", async (req, res) => {
     }
 })
 
-const PORT = Number.parseInt(process.env.PORT) || 8080;
+const PORT = Number.parseInt(process.env.PORT) || 80;
 app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`);
 });
