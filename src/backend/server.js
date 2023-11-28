@@ -210,6 +210,14 @@ app.get('/getImagePosts', async(req,res) => {
 
 })
 
+app.get("/", async (req, res) => {
+    try {
+        res.send('please bro just work please man');
+    } catch (error) {
+        res.send(error)
+    }
+})
+
 const PORT = Number.parseInt(process.env.PORT) || 8080;
 app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`);
