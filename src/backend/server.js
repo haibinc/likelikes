@@ -16,7 +16,7 @@ const validator = require('validator');
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 const fs = require('fs');
-const file = fs.readFileSync('twitterclone/BC3C2121F021FF610960E2DCA9A1A16F.txt')
+const file = fs.readFileSync('/Users/haibin/WebstormProjects/twitterclone1/twitterclone/BC3C2121F021FF610960E2DCA9A1A16F.txt')
 app.use(cors());
 app.use(express.json());
 // app.use(express.urlencoded({extended: true}));
