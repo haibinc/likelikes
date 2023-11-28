@@ -15,12 +15,17 @@ let secretKey = '';
 const validator = require('validator');
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
-
+const fs = require('fs');
+const file = fs.readFileSync('./BC3C2121F021FF610960E2DCA9A1A16F.txt')
 app.use(cors());
 app.use(express.json());
 // app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.text());
 dotenv.config();
+
+app.get('/.well-known/pki-validation/BC3C2121F021FF610960E2DCA9A1A16F.txt', (req, res) => {
+    res.sendFile('/Users/haibin/WebstormProjects/twitterclone1/twitterclone/src/backend/BC3C2121F021FF610960E2DCA9A1A16F.txt');
+})
 //
 // const s3 = new S3Client({
 //     credentials:{
