@@ -16,15 +16,19 @@ const validator = require('validator');
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 const fs = require('fs');
-const https = require('https')
-const file = fs.readFileSync('private.key')
-const cert = fs.readFileSync('certificate.crt')
+const https = require('https');
+const key = fs.readFileSync('private.key');
+const cert = fs.readFileSync('certificate.crt');
 app.use(cors());
 app.use(express.json());
 // app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.text());
 dotenv.config();
 
+const cred = {
+    key,
+    cert
+}
 
 //
 // const s3 = new S3Client({
@@ -228,3 +232,6 @@ const PORT = Number.parseInt(process.env.PORT) || 8080;
 app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`);
 });
+
+const httpsServer = https.createServer(cred, app);
+httpsServer.listen(8443);
