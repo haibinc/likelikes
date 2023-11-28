@@ -24,7 +24,7 @@ app.use(bodyParser.text());
 dotenv.config();
 
 app.get('/.well-known/pki-validation/BC3C2121F021FF610960E2DCA9A1A16F.txt', (req, res) => {
-    res.sendFile('./BC3C2121F021FF610960E2DCA9A1A16F.txt');
+    res.sendFile('/home/ec2-user/likelikes/src/backend/BC3C2121F021FF610960E2DCA9A1A16F.txt');
 })
 //
 // const s3 = new S3Client({
