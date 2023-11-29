@@ -33,10 +33,10 @@ const cred = {
 
 const s3 = new S3Client({
     credentials:{
-        accessKeyId: 'AKIA6KZJMKD2P7KBNHOC',
-        secretAccessKey: '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',
+        accessKeyId: process.env.REACT_APP_ACCESS_KEY,
+        secretAccessKey: process.env.REACT_APP_SECRET_KEY,
     },
-    region: 'us-west-1'
+    region: process.env.REACT_APP_BUCKET_REGION
 });
 
 const isValidPassword = (password) => {
@@ -89,10 +89,10 @@ const checkHashedPassword = async (inputPassword, hashedPassword) => {
 }
 
 const dbLogin = mysql.createPool({
-    host: 'tutorial-db-instance.cdi7glvucsme.us-west-1.rds.amazonaws.com',
-    user: 'tutorial_user',
-    port: '3306',
-    password: '!Damkies33',
+    host: process.env.REACT_APP_MYSQL_HOST,
+    user: process.env.REACT_APP_MYSQL_USER,
+    port: process.env.REACT_APP_PORT,
+    password: process.env.REACT_APP_MYSQL_PASSWORD,
     database: 'userLogins',
     connectionLimit: '10',
 })
@@ -120,10 +120,10 @@ async function testDatabaseConnection() {
 
 
 const dbImages = mysql.createPool({
-    host: 'tutorial-db-instance.cdi7glvucsme.us-west-1.rds.amazonaws.com',
-    user: 'tutorial_user',
-    port: '3306',
-    password: '!Damkies33',
+    host: process.env.REACT_APP_MYSQL_HOST,
+    user: process.env.REACT_APP_MYSQL_USER,
+    port: process.env.REACT_APP_PORT,
+    password: process.env.REACT_APP_MYSQL_PASSWORD,
     database: 'IMAGES',
     connectionLimit: '10',
 })
@@ -202,7 +202,7 @@ app.post('/submitPicture', upload.single('image'),async (req, res) => {
     try{
         const imageName = generateImageName();
         const params = {
-            Bucket: 'likelikes-image',
+            Bucket: process.env.REACT_APP_BUCKET_NAME,
             Key: imageName,
             Body: req.file.buffer,
             ContentType: req.file.mimetype,
@@ -225,7 +225,7 @@ app.get('/getImagePosts', async(req,res) => {
         if(rows){
             for(let post of rows){
                 const params = {
-                    Bucket: 'likelikes-image',
+                    Bucket: process.env.REACT_APP_BUCKET_NAME,
                     Key: post.imageName,
                 }
                 const command = new GetObjectCommand(params);
