@@ -202,7 +202,7 @@ app.post('/submitPicture', upload.single('image'),async (req, res) => {
     try{
         const imageName = generateImageName();
         const params = {
-            Bucket: 'likelikes',
+            Bucket: 'likelikes-image',
             Key: imageName,
             Body: req.file.buffer,
             ContentType: req.file.mimetype,
@@ -225,7 +225,7 @@ app.get('/getImagePosts', async(req,res) => {
         if(rows){
             for(let post of rows){
                 const params = {
-                    Bucket: likelikes,
+                    Bucket: 'likelikes-image',
                     Key: post.imageName,
                 }
                 const command = new GetObjectCommand(params);
