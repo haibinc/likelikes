@@ -90,7 +90,7 @@ const checkHashedPassword = async (inputPassword, hashedPassword) => {
 
 const dbLogin = mysql.createPool({
     host: 'tutorial-db-instance.cdi7glvucsme.us-west-1.rds.amazonaws.com',
-    user: 'root',
+    user: 'tutorial_user',
     port: '3306',
     password: '!Damkies33',
     database: 'DATABASE',
