@@ -121,10 +121,10 @@ async function testDatabaseConnection() {
 
 const dbImages = mysql.createPool({
     host: 'tutorial-db-instance.cdi7glvucsme.us-west-1.rds.amazonaws.com',
-    user: 'root',
+    user: 'tutorial_user',
     port: '3306',
     password: '!Damkies33',
-    database: 'IMAGEDATA',
+    database: 'IMAGES',
     connectionLimit: '10',
 })
 
