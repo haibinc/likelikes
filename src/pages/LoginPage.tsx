@@ -20,7 +20,7 @@ function LoginPage() {
 
     const submitForm = async(e: React.SyntheticEvent) => {
         e.preventDefault();
-        const baseUrl = 'https://likelikes-867512b88371.herokuapp.com';
+        const baseUrl = 'https://13.52.214.140';
         try{
             const res = await fetch(`${baseUrl}/submitLogin`, {
                     method: 'POST',

@@ -10,7 +10,7 @@ const breakpointColumnsObj = {
 
 function ImageBoard() {
     const [images, setImages] = useState<pictureForm[]>([]);
-    const baseUrl = 'https://likelikes-867512b88371.herokuapp.com';
+    const baseUrl = 'https://13.52.214.140';
 
     useEffect(() => {
 
