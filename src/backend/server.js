@@ -93,7 +93,7 @@ const dbLogin = mysql.createPool({
     user: 'tutorial_user',
     port: '3306',
     password: '!Damkies33',
-    database: 'userlogins',
+    database: 'userLogins',
     connectionLimit: '10',
 })
 
