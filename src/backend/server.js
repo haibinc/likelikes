@@ -220,7 +220,7 @@ app.post('/submitPicture', upload.single('image'),async (req, res) => {
 
 app.get('/getImagePosts', async(req,res) => {
     try{
-        const [rows] = await dbImages.execute('SELECT * FROM imagedatas ORDER BY created DESC');
+        const [rows] = await dbImages.execute('SELECT * FROM imageData ORDER BY created DESC');
 
         if(rows){
             for(let post of rows){
