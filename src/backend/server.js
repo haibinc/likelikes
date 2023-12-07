@@ -241,6 +241,7 @@ app.get('/getImagePosts', async(req,res) => {
 })
 
 app.post('/passwordRecovery', async(req, res) => {
+    console.log('something');
     if(isValidEmail(req.body.email))
     {
         return res.status(400).send('Not a valid email address');
