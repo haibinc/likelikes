@@ -238,7 +238,21 @@ app.get('/getImagePosts', async(req,res) => {
     {
         console.error('error getting image posts: ', err)
     }
+})
 
+app.post('/passwordRecovery', async(req, res) => {
+    if(isValidEmail(req.body.email))
+    {
+        return res.status(400).send('Not a valid email address');
+    }
+
+    try{
+
+    }
+    catch(error){
+        console.error('Error:', err);
+        return res.status(400).send(err);
+    }
 })
 
 app.get("/", async (req, res) => {

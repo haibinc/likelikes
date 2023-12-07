@@ -45,6 +45,9 @@ function Home() {
     return (
         <div>
             <div style={{display: isAuth ? 'none' : 'block'}}>
+                <div style={{position:'absolute', marginLeft:'1.5rem'}}>
+                    <button className="CustomButton1" onClick={() => redirect('/home')}>Likelikes</button>
+                </div>
                 <div style={{display: 'flex', justifyContent: 'flex-end', marginRight: '10rem', marginTop: '1rem'}}>
                     <button className="CustomButton1" onClick={displayLogin}> Log in</button>
                     <button className="CustomButton1" onClick={displaySignup}

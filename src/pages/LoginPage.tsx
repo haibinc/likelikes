@@ -83,6 +83,7 @@ function LoginPage() {
                 <h3 style={{display: (state.successMessage !== '')? 'inline' : 'none', fontSize: '0.95rem',
                     color:'darkblue', textAlign: 'left', marginLeft:'0.5rem',
                 }}> {state.successMessage} </h3>
+                <p style={{fontSize:'0.7rem'}}>Forgot your password? <a href="/forgot-password">Reset it here</a>.</p>
                 <button style={{marginTop:'3rem', alignSelf:'center'}} onClick={submitForm} className="CustomButton1">Log In</button>
             </form>
         </div>
