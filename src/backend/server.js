@@ -241,7 +241,6 @@ app.get('/getImagePosts', async(req,res) => {
 })
 
 app.post('/passwordRecovery', async(req, res) => {
-    return res.send('sup');
     if(isValidEmail(req.body.email))
     {
         return res.status(400).send('Not a valid email address');
@@ -254,6 +253,10 @@ app.post('/passwordRecovery', async(req, res) => {
         console.error('Error:', err);
         return res.status(400).send(err);
     }
+})
+
+app.get('/passwordRecovery', async(req,res) => {
+    res.send('sup');
 })
 
 app.get("/", async (req, res) => {
