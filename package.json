@@ -36,7 +36,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "dev": "nodemon src/backend/server.js",
+    "dev": "nodemon /home/ec2-user/likelikes/src/backend/server.js",
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
