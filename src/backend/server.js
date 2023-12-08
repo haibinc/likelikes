@@ -239,13 +239,13 @@ app.get('/getImagePosts', async(req,res) => {
     }
 })
 
-app.get('/getImageData/:imageName', async(req, res) => {
+app.get('/getImageData/:picTitle', async(req, res) => {
     try{
         const sqlSelect = "SELECT * FROM imageData WHERE picTitle = ?";
-        const [rows, fields] = await dbImages.execute(sqlSelect, [req.params.imageName]);
+        const [rows, fields] = await dbImages.execute(sqlSelect, [req.params.picTitle]);
         const params = {
             Bucket: process.env.REACT_APP_BUCKET_NAME,
-            Key: req.body.imageName,
+            Key: rows[0].imageName,
         }
         const command = new GetObjectCommand(params);
         const url = await getSignedUrl(s3, command, {expiredIn: 3600});

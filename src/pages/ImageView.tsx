@@ -8,12 +8,12 @@ function ImageView() {
     const [isAuth, setIsAuth] = useState<boolean | undefined>(undefined);
     const [loading, setLoading] = useState(true);
     const [image, setImage] = useState<pictureForm>();
-    const imageName = useParams();
+    const picTitle = useParams();
 
     const getPictureData = async() => {
         const baseUrl = 'https://13.52.214.140';
         try{
-            const res = await fetch(`${baseUrl}/getImageData/${imageName}`, {
+            const res = await fetch(`${baseUrl}/getImageData/${picTitle}`, {
                 method: 'GET',
                 mode: 'cors',
             });
