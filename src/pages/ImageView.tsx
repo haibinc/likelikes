@@ -2,11 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {ChangeWeb} from '../Components/ChangeWeb';
 import Authenticate from '../Components/Authenticate';
 import {useParams} from 'react-router-dom';
-
+import {pictureForm} from '../types/form';
 function ImageView() {
     const redirect = ChangeWeb();
     const [isAuth, setIsAuth] = useState<boolean | undefined>(undefined);
     const [loading, setLoading] = useState(true);
+    const [image, setImage] = useState<pictureForm[]>([]);
     const imageName = useParams();
 
     const getPictureData = async() => {
@@ -21,8 +22,9 @@ function ImageView() {
                 }
             });
             if(res.ok){
-                const image = await res.text();
+                const image = await res.json();
                 console.log(image);
+                // setImage(image);
             }
             else if(!res.ok){
                 const errorCode = await res.text();
@@ -56,6 +58,7 @@ function ImageView() {
                 </button>
             </div>
             <h1> SUPSUPSUP</h1>
+            {/*<img src={image.imageUrl}/>*/}
         </div>
     );
 }

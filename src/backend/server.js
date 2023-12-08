@@ -250,7 +250,7 @@ app.post('/getImageData', async(req, res) => {
         }
         const command = new GetObjectCommand(params);
         const url = await getSignedUrl(s3, command, {expiredIn: 3600});
-        rows.imageUrl = url;
+        rows[0].imageUrl = url;
         res.send(rows);
     }catch(error){
         console.error('Error', error);
