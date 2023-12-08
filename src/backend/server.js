@@ -17,8 +17,8 @@ const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 const fs = require('fs');
 const https = require('https');
-// const key = fs.readFileSync('private.key');
-// const cert = fs.readFileSync('certificate.crt');
+const key = fs.readFileSync('private.key');
+const cert = fs.readFileSync('certificate.crt');
 app.use(cors());
 app.use(express.json());
 // app.use(express.urlencoded({extended: true}));
@@ -291,5 +291,5 @@ app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`);
 });
 
-// const httpsServer = https.createServer(cred, app);
-// httpsServer.listen(8443);
+const httpsServer = https.createServer(cred, app);
+httpsServer.listen(8443);
