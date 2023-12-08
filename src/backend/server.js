@@ -25,10 +25,10 @@ app.use(express.json());
 app.use(bodyParser.text());
 dotenv.config();
 
-// const cred = {
-//     key,
-//     cert
-// }
+const cred = {
+    key,
+    cert
+}
 
 
 const s3 = new S3Client({
