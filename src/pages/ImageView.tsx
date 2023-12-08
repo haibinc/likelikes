@@ -54,7 +54,12 @@ function ImageView() {
                 </button>
             </div>
             <h1> SUPSUPSUP</h1>
-            <img src={image?.imageUrl} />
+            <div>
+                <img src={image?.imageUrl} />
+                <h1> Title: {image?.picTitle}</h1>
+                <h1> Description: {image?.picDescription}</h1>
+                <button className="CustomButton1">LIKE</button>
+            </div>
         </div>
     );
 }

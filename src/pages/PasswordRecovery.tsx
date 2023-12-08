@@ -8,8 +8,8 @@ function PasswordRecovery() {
 
     const handleSubmit = async(event: React.SyntheticEvent) => {
         event.preventDefault();
-        // const baseUrl = 'https://13.52.214.140';
-        const baseUrl = 'http://localhost:8080';
+        const baseUrl = 'https://13.52.214.140';
+        // const baseUrl = 'http://localhost:8080';
         try{
             const res = await fetch(`${baseUrl}/passwordRecovery`, {
                 method: 'POST',

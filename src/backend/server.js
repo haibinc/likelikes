@@ -200,6 +200,7 @@ app.get('/checkToken', validateToken, (req, res) => {
 app.post('/submitPicture', upload.single('image'),async (req, res) => {
     try{
         const imageName = generateImageName();
+        const trimPicTitle = picTitle.trim();
         const params = {
             Bucket: process.env.REACT_APP_BUCKET_NAME,
             Key: imageName,
@@ -208,7 +209,7 @@ app.post('/submitPicture', upload.single('image'),async (req, res) => {
         }
         const command = new PutObjectCommand(params)
         await s3.send(command);
-        const sqlInsert = "INSERT into imageData (picTitle, picDescription, imageName, created) VALUES (?,?,?,CURRENT_TIMESTAMP)";
+        const sqlInsert = "INSERT into imageData (trimPicTitle, picDescription, imageName, created) VALUES (?,?,?,CURRENT_TIMESTAMP)";
         const values = [req.body.picTitle, req.body.picDescription, imageName];
         const [rows, fields] = await dbImages.execute(sqlInsert, values);
         return res.status(200).send('Submission Success');
