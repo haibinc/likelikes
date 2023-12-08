@@ -239,11 +239,10 @@ app.get('/getImagePosts', async(req,res) => {
     }
 })
 
-app.post('/getImageData', async(req, res) => {
-    console.log(req.body.imageName);
+app.get('/getImageData/:imageName', async(req, res) => {
     try{
         const sqlSelect = "SELECT * FROM imageData WHERE picTitle = ?";
-        const [rows, fields] = await dbImages.execute(sqlSelect, [req.body.imageName]);
+        const [rows, fields] = await dbImages.execute(sqlSelect, [req.params.imageName]);
         const params = {
             Bucket: process.env.REACT_APP_BUCKET_NAME,
             Key: req.body.imageName,

@@ -7,24 +7,19 @@ function ImageView() {
     const redirect = ChangeWeb();
     const [isAuth, setIsAuth] = useState<boolean | undefined>(undefined);
     const [loading, setLoading] = useState(true);
-    const [image, setImage] = useState<pictureForm[]>([]);
+    const [image, setImage] = useState<pictureForm>();
     const imageName = useParams();
 
     const getPictureData = async() => {
         const baseUrl = 'https://13.52.214.140';
         try{
-            const res = await fetch(`${baseUrl}/getImageData`, {
-                method: 'POST',
+            const res = await fetch(`${baseUrl}/getImageData/${imageName}`, {
+                method: 'GET',
                 mode: 'cors',
-                body: JSON.stringify(imageName),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
             });
             if(res.ok){
                 const image = await res.json();
-                console.log(image);
-                // setImage(image);
+                setImage(image[0]);
             }
             else if(!res.ok){
                 const errorCode = await res.text();
@@ -58,7 +53,7 @@ function ImageView() {
                 </button>
             </div>
             <h1> SUPSUPSUP</h1>
-            {/*<img src={image.imageUrl}/>*/}
+            <img src={image?.imageUrl} />
         </div>
     );
 }
