@@ -21,7 +21,8 @@ function ImageView() {
                 }
             });
             if(res.ok){
-                console.log('ITS ALL GOOD IN THE HOOD')
+                const image = await res.text();
+                console.log(image);
             }
             else if(!res.ok){
                 const errorCode = await res.text();
