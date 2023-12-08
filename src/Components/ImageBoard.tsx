@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { pictureForm } from '../types/form';
 import Masonry from 'react-masonry-css';
+import {ChangeWeb} from '../Components/ChangeWeb';
 
 const breakpointColumnsObj = {
     default: 4,
@@ -11,9 +12,9 @@ const breakpointColumnsObj = {
 function ImageBoard() {
     const [images, setImages] = useState<pictureForm[]>([]);
     const baseUrl = 'https://13.52.214.140';
+    const redirect = ChangeWeb();
 
     useEffect(() => {
-
         const fetchImages = async () => {
             try {
                 const response = await fetch(`${baseUrl}/getImagePosts`, {
@@ -42,8 +43,8 @@ function ImageBoard() {
                 columnClassName="my-masonry-grid_column"
             >
                 {images.map((image) => (
-                    <div key={image.image_Name}>
-                        <img src={image.imageUrl} alt={image.picTitle} />
+                    <div key={image.imageName}>
+                        <img src={image.imageUrl} onClick={() => redirect(`/image/${image.picTitle}`)} alt={image.picTitle} />
                     </div>
                 ))}
             </Masonry>

@@ -4,10 +4,12 @@ import {ChangeWeb} from "../Components/ChangeWeb";
 function PasswordRecovery() {
     const redirect = ChangeWeb();
     const [email, setEmail] = useState('')
+    const [message, setMessage] = useState('')
 
     const handleSubmit = async(event: React.SyntheticEvent) => {
         event.preventDefault();
-        const baseUrl = 'https://13.52.214.140';
+        // const baseUrl = 'https://13.52.214.140';
+        const baseUrl = 'http://localhost:8080';
         try{
             const res = await fetch(`${baseUrl}/passwordRecovery`, {
                 method: 'POST',
@@ -18,12 +20,13 @@ function PasswordRecovery() {
                 },
             })
             if(res.ok){
+                setMessage('i think ima do this later because it requires setting up a email system and that is not a core feature');
                 console.log('password recovered');
             }
-            else{
+            else if(!res.ok){
                 const error = await res.text();
+                setMessage('Not a valid email address.')
                 console.log(error);
-                console.log('ERROR PASSWORD NOT RECOVERED');
             }
         }
         catch(error)
@@ -47,6 +50,9 @@ function PasswordRecovery() {
                     <h1> Reset Password</h1>
                     <text> Enter your email:</text>
                     <input onChange={handleChange} className="Form" type='email' name='email' placeholder="Enter email..." required={true}/>
+                    <h3 style={{display: (message !== '')? 'inline' : 'none', fontSize: '0.95rem',
+                        color:'red', textAlign: 'left', marginLeft:'0.5rem',
+                    }}> {message} </h3>
                     <button onClick={handleSubmit} className="CustomButton1" style={{marginTop: '3rem', alignSelf: 'center'}}>RECOVER</button>
                 </form>
             </div>

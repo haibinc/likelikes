@@ -9,7 +9,7 @@ export interface userPassForms{
 
 export interface pictureForm{
     created: string,
-    image_Name: string,
+    imageName: string,
     imageUrl: string,
     picDescription: string,
     picTitle: string,

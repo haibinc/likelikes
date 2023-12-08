@@ -17,18 +17,18 @@ const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 const fs = require('fs');
 const https = require('https');
-const key = fs.readFileSync('private.key');
-const cert = fs.readFileSync('certificate.crt');
+// const key = fs.readFileSync('private.key');
+// const cert = fs.readFileSync('certificate.crt');
 app.use(cors());
 app.use(express.json());
 // app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.text());
 dotenv.config();
 
-const cred = {
-    key,
-    cert
-}
+// const cred = {
+//     key,
+//     cert
+// }
 
 
 const s3 = new S3Client({
@@ -183,7 +183,6 @@ app.post('/submitLogin', async (req, res) => {
 const validateToken = (req, res, next) => {
     const token = req.headers.authorization;
     if (!token) {
-        console.log('first');
         return res.status(401).json({message: 'Unauthorized - Missing token'});
     }
     try {
@@ -195,7 +194,7 @@ const validateToken = (req, res, next) => {
 };
 
 app.get('/checkToken', validateToken, (req, res) => {
-    res.status(200).json({message: 'Auth Sucess'});
+    res.status(200).json({message: 'Auth Success'});
 });
 
 app.post('/submitPicture', upload.single('image'),async (req, res) => {
@@ -240,15 +239,33 @@ app.get('/getImagePosts', async(req,res) => {
     }
 })
 
+app.post('/getImageData', async(req, res) => {
+    console.log(req.body.imageName);
+    try{
+        const sqlSelect = "SELECT * FROM imageData WHERE picTitle = ?";
+        const [rows, fields] = await dbImages.execute(sqlSelect, [req.body.imageName]);
+        const params = {
+            Bucket: process.env.REACT_APP_BUCKET_NAME,
+            Key: req.body.imageName,
+        }
+        const command = new GetObjectCommand(params);
+        const url = await getSignedUrl(s3, command, {expiredIn: 3600});
+        res.send(url);
+    }catch(error){
+        console.error('Error', error);
+    }
+})
+
 app.post('/passwordRecovery', async(req, res) => {
     console.log('something');
-    // if(isValidEmail(req.body.email))
-    // {
-    //     return res.status(400).send('Not a valid email address');
-    // }
+
+    if(!isValidEmail(req.body))
+    {
+        return res.status(400).send('Not a valid email address');
+    }
 
     try{
-
+        return res.status(200).send('Valid email');
     }
     catch(error){
         console.error('Error:', err);
@@ -274,5 +291,5 @@ app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`);
 });
 
-const httpsServer = https.createServer(cred, app);
-httpsServer.listen(8443);
+// const httpsServer = https.createServer(cred, app);
+// httpsServer.listen(8443);

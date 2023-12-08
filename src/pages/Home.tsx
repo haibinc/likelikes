@@ -11,6 +11,7 @@ function Home() {
     const [isAuth, setIsAuth] = useState<boolean | undefined>(undefined);
     const [showLogin, setShowLogin] = useState(false);
     const [showSignup, setSignup] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const displayLogin = () => {
         if (showSignup) {
@@ -38,14 +39,20 @@ function Home() {
         const checkAuthentication = async () => {
             const result = await Authenticate();
             setIsAuth(result);
+            setLoading(false);
         };
         checkAuthentication();
     }, []);
 
+    if (loading) {
+        return <div>
+        </div>
+    }
+
     return (
         <div>
             <div style={{display: isAuth ? 'none' : 'block'}}>
-                <div style={{position:'absolute', marginLeft:'1.5rem'}}>
+                <div style={{position: 'absolute', marginLeft: '1.5rem'}}>
                     <button className="CustomButton1" onClick={() => redirect('/home')}>Likelikes</button>
                 </div>
                 <div style={{display: 'flex', justifyContent: 'flex-end', marginRight: '10rem', marginTop: '1rem'}}>
@@ -62,16 +69,20 @@ function Home() {
                 </div>
             </div>
             <div style={{display: isAuth ? 'block' : 'none'}}>
-                <div style={{display: 'flex', justifyContent:'flex-end'}}>
-                    <button style={{marginTop:'1.75rem', height:'2rem', alignSelf: 'start', position:'fixed', left:'1rem', backgroundColor: 'peru'}} onClick={() => redirect('/home')}
-                            className="CustomButton1">Home
+                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                    <button
+                        style={{marginTop: '1.75rem', height: '2rem', alignSelf: 'start', position: 'fixed', left: '1rem', backgroundColor: 'peru'}}
+                        onClick={() => redirect('/home')}
+                        className="CustomButton1">Home
                     </button>
-                    <button className="CustomButton1" onClick={()=> redirect('/create')} style={{backgroundColor: 'sienna', minWidth: '4.5rem', marginTop:'1.75rem', marginRight:'25vw', height:'2rem'}}>
+                    <button className="CustomButton1" onClick={() => redirect('/create')}
+                            style={{backgroundColor: 'sienna', minWidth: '4.5rem', marginTop: '1.75rem', marginRight: '25vw', height: '2rem'}}>
                         CREATE
                     </button>
-                    <h1 style={{marginRight:'35vw'}}> WELCOME </h1>
+                    <h1 style={{marginRight: '35vw'}}> WELCOME </h1>
                     <button className="CustomButton1" onClick={signOut}
-                            style={{backgroundColor: 'mediumaquamarine', minWidth: '4.5rem', marginTop:'1.75rem', marginRight:'2rem', height:'2rem'}}> Sign Out
+                            style={{backgroundColor: 'mediumaquamarine', minWidth: '4.5rem', marginTop: '1.75rem', marginRight: '2rem', height: '2rem'}}> Sign
+                        Out
                     </button>
                 </div>
                 <div>

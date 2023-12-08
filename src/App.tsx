@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import LoginPage from './pages/LoginPage'
 import Create from "./pages/Create";
 import PasswordRecovery from "./pages/PasswordRecovery"
+import ImageView from "./pages/ImageView";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
               <Route path="/loginpage" element={<LoginPage/>}/>
               <Route path="/create" element={<Create/>}/>
               <Route path="/forgot-password" element={<PasswordRecovery/>}/>
+              <Route path="/image/:imageName" element={<ImageView/>} />
           </Routes>
         </BrowserRouter>
     </div>
