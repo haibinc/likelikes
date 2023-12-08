@@ -241,19 +241,19 @@ app.get('/getImagePosts', async(req,res) => {
 
 app.post('/getImageData', async(req, res) => {
     console.log(req.body.imageName);
-    try{
-        const sqlSelect = "SELECT * FROM imageData WHERE picTitle = ?";
-        const [rows, fields] = await dbImages.execute(sqlSelect, [req.body.imageName]);
-        const params = {
-            Bucket: process.env.REACT_APP_BUCKET_NAME,
-            Key: req.body.imageName,
-        }
-        const command = new GetObjectCommand(params);
-        const url = await getSignedUrl(s3, command, {expiredIn: 3600});
-        res.send(url);
-    }catch(error){
-        console.error('Error', error);
-    }
+    // try{
+    //     const sqlSelect = "SELECT * FROM imageData WHERE picTitle = ?";
+    //     const [rows, fields] = await dbImages.execute(sqlSelect, [req.body.imageName]);
+    //     const params = {
+    //         Bucket: process.env.REACT_APP_BUCKET_NAME,
+    //         Key: req.body.imageName,
+    //     }
+    //     const command = new GetObjectCommand(params);
+    //     const url = await getSignedUrl(s3, command, {expiredIn: 3600});
+    //     res.send(url);
+    // }catch(error){
+    //     console.error('Error', error);
+    // }
 })
 
 app.post('/passwordRecovery', async(req, res) => {
