@@ -13,7 +13,8 @@ function ImageView() {
     const getPictureData = async() => {
         const baseUrl = 'https://13.52.214.140';
         try{
-            const res = await fetch(`${baseUrl}/getImageData/${picTitle}`, {
+            console.log(picTitle);
+            const res = await fetch(`${baseUrl}/getImageData/${picTitle.imageName}`, {
                 method: 'GET',
                 mode: 'cors',
             });
