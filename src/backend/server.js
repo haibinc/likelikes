@@ -245,7 +245,7 @@ app.get('/getImageData/:picTitle', async(req, res) => {
         const [rows, fields] = await dbImages.execute(sqlSelect, [req.params.picTitle]);
         const params = {
             Bucket: process.env.REACT_APP_BUCKET_NAME,
-            Key: rows[0].imageName,
+            Key: rows.imageName,
         }
         const command = new GetObjectCommand(params);
         const url = await getSignedUrl(s3, command, {expiredIn: 3600});
