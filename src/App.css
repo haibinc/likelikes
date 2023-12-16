@@ -27,16 +27,18 @@
   display: flex;
   justify-content: center;
   margin-left: 35vw;
-  height: 90vh;
+  min-height: 90vh;
   width: 30vw;
-  border: 0.01rem solid black;
+  border: 0.01rem solid white;
   border-radius: 2rem;
+  background-color: white;
 }
 
 .FormContainer{
   display:flex;
   flex-direction: column;
   max-width: 300px;
+  color:black;
 }
 
 .FormContainer label{
@@ -94,5 +96,17 @@
 
 .my-masonry-grid_column img:hover {
   cursor: pointer;
+}
 
+.ImageViewContainer{
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.ImageViewContainer img{
+
+  height: 20rem;
+  border-radius: 8px;
+  object-fit:cover;
 }

@@ -3,6 +3,7 @@ import {ChangeWeb} from '../Components/ChangeWeb';
 import Authenticate from '../Components/Authenticate';
 import {useParams} from 'react-router-dom';
 import {pictureForm} from '../types/form';
+
 function ImageView() {
     const redirect = ChangeWeb();
     const [isAuth, setIsAuth] = useState<boolean | undefined>(undefined);
@@ -21,6 +22,7 @@ function ImageView() {
             if(res.ok){
                 const image = await res.json();
                 setImage(image[0]);
+                console.log(image[0]);
             }
             else if(!res.ok){
                 const errorCode = await res.text();
@@ -53,9 +55,10 @@ function ImageView() {
                         className="CustomButton1">Home
                 </button>
             </div>
-            <h1> SUPSUPSUP</h1>
-            <div>
+            <div className="ImageViewContainer">
                 <img src={image?.imageUrl} />
+            </div>
+            <div>
                 <h1> Title: {image?.picTitle}</h1>
                 <h1> Description: {image?.picDescription}</h1>
                 <button className="CustomButton1">LIKE</button>

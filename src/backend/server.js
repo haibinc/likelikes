@@ -199,6 +199,7 @@ app.get('/checkToken', validateToken, (req, res) => {
 
 app.post('/submitPicture', upload.single('image'),async (req, res) => {
     try{
+
         const imageName = generateImageName();
         const trimPicTitle = req.body.picTitle.trim();
         const params = {

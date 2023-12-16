@@ -2,7 +2,11 @@ import React, {ChangeEvent} from 'react';
 import {useReducer} from 'react';
 import {userPassForms, changeForm} from '../types/form';
 
-function LoginPage() {
+interface LoginPageProps {
+    closeLogin: () => void;
+}
+
+function LoginPage({closeLogin} : LoginPageProps) {
     let loginForm:userPassForms = {
         email: '',
         password: '',
@@ -65,10 +69,23 @@ function LoginPage() {
         }
     }
 
+    const handleLoginClose = () => {
+        closeLogin();
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+        if (e.key === 'Enter') {
+            submitForm(e);
+        }
+    };
+
     return (
         <div className="CenterContainer">
-            <form method="POST" className="FormContainer">
-                <h1> Welcome to Likelikes</h1>
+            <form method="POST" className="FormContainer" onKeyDown={handleKeyDown}>
+                <h1> Login to Likelikes</h1>
+                <button style={{position: 'absolute', backgroundColor:'white',
+                border:'.0', color:'blue', marginTop:'.5rem',
+                 marginLeft:'18.5rem', fontSize:'1.5rem'}} onClick={handleLoginClose}> x </button>
                 <label htmlFor='Email'> <b>Email</b> </label>
                 <input onChange={handleChange} type='email' placeholder='Enter Email' name="email" required={true}/>
                 <h3 style={{display: (state.emailMessage !== '')? 'inline' : 'none', fontSize: '0.5rem',

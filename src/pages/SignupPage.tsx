@@ -2,8 +2,12 @@ import React, {ChangeEvent} from 'react';
 import {useReducer} from 'react';
 import {userPassForms, changeForm} from '../types/form';
 
+interface SignupPageProps {
+    closeSignup: () => void;
+    openLogin: () => void;
+}
 
-function SignupPage() {
+function SignupPage({closeSignup, openLogin} : SignupPageProps) {
     let signupForm:userPassForms = {
         email: '',
         password: '',
@@ -37,6 +41,9 @@ function SignupPage() {
                 dispatch({type:'SET_FIELD', field:'emailMessage', value:''});
                 dispatch({type:'SET_FIELD', field:'passwordMessage', value:''});
                 dispatch({type:'SET_FIELD', field:'successMessage', value:'Successful Signup'});
+                setTimeout(() => {
+                    openLogin();
+                }, 1000);
             }
             else if(!res.ok)
             {
@@ -69,10 +76,23 @@ function SignupPage() {
         }
     }
 
+    const handleSignupClose = () => {
+        closeSignup();
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+        if (e.key === 'Enter') {
+            submitForm(e);
+        }
+    };
+
     return (
         <div className="CenterContainer">
-            <form method="POST" className="FormContainer">
-                <h1> Welcome to Likelikes</h1>
+            <form method="POST" className="FormContainer" onKeyDown={handleKeyDown}>
+                <h1> Signup to Likelikes</h1>
+                <button style={{position: 'absolute', backgroundColor:'white', border:'.0',
+                    color:'blue', marginTop:'.5rem',
+                    marginLeft:'19.5rem', fontSize:'1.5rem'}} onClick={handleSignupClose}> x </button>
                 <label htmlFor='Email'> <b>Email</b> </label>
                 <input onChange={handleChange} type='email' placeholder='Enter Email' name="email" required={true}/>
                 <h3 style={{display: (state.emailMessage !== '')? 'inline' : 'none', fontSize: '0.5rem',
