@@ -22,7 +22,6 @@ function ImageView() {
             if(res.ok){
                 const image = await res.json();
                 setImage(image[0]);
-                console.log(image[0]);
             }
             else if(!res.ok){
                 const errorCode = await res.text();

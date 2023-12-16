@@ -138,7 +138,6 @@ app.post('/submitSignup', async (req, res) => {
         const hashedPasswordSalt = await hashPassword(req.body.password);
         req.body.password = hashedPasswordSalt.hashedPassword;
         req.body.salt = hashedPasswordSalt.salt;
-
         const sqlInsert = "INSERT INTO login (username, password, salt) VALUES (?, ?, ?)";
         const values = [req.body.email, req.body.password, req.body.salt];
         const [row, fields] = await dbLogin.execute(sqlInsert, values);
@@ -181,12 +180,12 @@ app.post('/submitLogin', async (req, res) => {
 })
 
 const validateToken = (req, res, next) => {
-    const token = req.headers.authorization;
-    if (!token) {
+    const tokenId = req.headers.authorization;
+    if (!tokenId) {
         return res.status(401).json({message: 'Unauthorized - Missing token'});
     }
     try {
-        const decoded = jwt.verify(token, secretKey);
+        const decoded = jwt.verify(tokenId, secretKey);
         next();
     } catch (error) {
         return res.status(401).json({message: 'Unauthorized - Invalid token'});
@@ -199,8 +198,8 @@ app.get('/checkToken', validateToken, (req, res) => {
 
 app.post('/submitPicture', upload.single('image'),async (req, res) => {
     try{
-
         const imageName = generateImageName();
+
         const trimPicTitle = req.body.picTitle.trim();
         const params = {
             Bucket: process.env.REACT_APP_BUCKET_NAME,

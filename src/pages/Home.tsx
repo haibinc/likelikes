@@ -110,7 +110,7 @@ function Home() {
                         className="CustomButton1">Home
                     </button>
                     <button className="CustomButton1" onClick={() => redirect('/create')}
-                            style={{backgroundColor: 'sienna', minWidth: '4.5rem', marginTop: '1.75rem', marginRight: '25vw', height: '2rem'}}>
+                            style={{backgroundColor: 'sienna', minWidth: '4.5rem', marginTop: '1.75rem', marginRight: '30vw', height: '2rem'}}>
                         CREATE
                     </button>
                     <h1 style={{marginRight: '35vw'}}> WELCOME </h1>
