@@ -36,6 +36,9 @@ function ImageView() {
     useEffect(() => {
         const checkAuthentication = async () => {
             const result = await Authenticate();
+            if(result === false){
+                redirect('/home');
+            }
             setIsAuth(result);
             getPictureData();
             setLoading(false);

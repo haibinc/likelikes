@@ -9,7 +9,8 @@ async function Authenticate() {
             const response = await fetch(`${baseUrl}/checkToken`, {
                 method: 'GET',
                 headers: {
-                    Authorization: `${token+userId}`,
+                    token: `${token}`,
+                    id: `${userId}`
                 },
             });
             if(response.ok) {

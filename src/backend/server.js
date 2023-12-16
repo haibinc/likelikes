@@ -180,12 +180,16 @@ app.post('/submitLogin', async (req, res) => {
 })
 
 const validateToken = (req, res, next) => {
-    const tokenId = req.headers.authorization;
-    if (!tokenId) {
+    const token = req.headers.token;
+    if (!token) {
         return res.status(401).json({message: 'Unauthorized - Missing token'});
     }
     try {
-        const decoded = jwt.verify(tokenId, secretKey);
+        const decodedToken = jwt.verify(token, secretKey);
+        if(decodedToken.userId !== req.headers.userId)
+        {
+            return res.status(401).json({ message: 'Unauthorized - Invalid Id' });
+        }
         next();
     } catch (error) {
         return res.status(401).json({message: 'Unauthorized - Invalid token'});
