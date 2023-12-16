@@ -35,11 +35,15 @@ function Create() {
 
     const submitForm = async (e: React.SyntheticEvent) => {
         e.preventDefault();
+        const userId = localStorage.getItem('userId')
         const formData = new FormData();
         if(file){
             formData.append("image", file);
             formData.append("picTitle", picDescription.picTitle);
             formData.append("picDescription", picDescription.pictDescription);
+            if(userId){
+                formData.append("userId", userId);
+            }
         }
 
         if (await Authenticate()) {

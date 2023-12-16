@@ -188,9 +188,6 @@ const validateToken = (req, res, next) => {
         const decodedToken = jwt.verify(token, secretKey);
         if(decodedToken.userId != req.headers.id)
         {
-            console.log("userId: " + decodedToken.userId);
-            console.log("id: " + req.headers.id);
-            console.log('WHAT IS GOING ON');
             return res.status(401).json({ message: 'Unauthorized - Invalid Id' });
         }
         next();
@@ -216,8 +213,8 @@ app.post('/submitPicture', upload.single('image'),async (req, res) => {
         }
         const command = new PutObjectCommand(params)
         await s3.send(command);
-        const sqlInsert = "INSERT into imageData (picTitle, picDescription, imageName, created) VALUES (?,?,?,CURRENT_TIMESTAMP)";
-        const values = [trimPicTitle, req.body.picDescription, imageName];
+        const sqlInsert = "INSERT into imageData (picTitle, picDescription, imageName, created, userId) VALUES (?,?,?,CURRENT_TIMESTAMP, ?)";
+        const values = [trimPicTitle, req.body.picDescription, imageName, req.body.userId];
         const [rows, fields] = await dbImages.execute(sqlInsert, values);
         return res.status(200).send('Submission Success');
     }catch(err){
