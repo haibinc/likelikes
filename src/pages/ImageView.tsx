@@ -56,8 +56,6 @@ function ImageView() {
 
     const checkId = () => {
         const id = localStorage.getItem('userId');
-        console.log(id);
-        console.log(image?.userId)
         if(String(id) === String(image?.userId)){
             setShowDelete(true);
         }
