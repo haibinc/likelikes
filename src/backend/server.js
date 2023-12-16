@@ -165,8 +165,8 @@ app.post('/submitLogin', async (req, res) => {
         if (rows.length > 0) {
             const checkPass = await checkHashedPassword(req.body.password, rows[0].password);
             if (checkPass) {
-                const token = jwt.sign({userId: rows[0].userid, email: rows[0].username}, secretKey, {expiresIn: '1h'});
-                return res.status(200).json({token, userId: rows[0].userid});
+                const token = jwt.sign({userId: rows[0].userId, email: rows[0].username}, secretKey, {expiresIn: '1h'});
+                return res.status(200).json({token, userId: rows[0].userId});
             } else if (!checkPass) {
                 return res.status(400).send('Password incorrect');
             }
