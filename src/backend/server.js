@@ -261,6 +261,29 @@ app.get('/getImageData/:picTitle', async(req, res) => {
     }
 })
 
+app.delete('/deletePicture/:picTitle', async(req,res) => {
+    try{
+        const sqlSelect = "SELECT * FROM imageData WHERE picTitle = ?";
+        const [rows, fields] = await dbImages.execute(sqlSelect, [req.params.picTitle]);
+        if(rows.length > 0){
+            const params = {
+                Bucket: process.env.REACT_APP_BUCKET_NAME,
+                Key: rows[0].imageName,
+            }
+            const command = new DeleteObjectCommand(params);
+            await s3.send(command);
+            const sqlDelete = "DELETE FROM imageData WHERE picTitle = ?";
+            await dbImages.execute(sqlDelete, [req.params.picTitle]);
+            res.status(200).send('Image deleted successfully');
+        }
+        else{
+            res.status(401).send('Image not found.')
+        }
+    }catch(error){
+        console.error('Error', error);
+    }
+})
+
 app.post('/passwordRecovery', async(req, res) => {
     console.log('something');
 

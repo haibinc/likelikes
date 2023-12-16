@@ -13,6 +13,7 @@ export interface pictureForm{
     imageUrl: string,
     picDescription: string,
     picTitle: string,
+    userId: number,
 }
 
 export type Action =  {type: 'SET_FIELD'; field: string; value: string }

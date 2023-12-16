@@ -8,13 +8,34 @@ function ImageView() {
     const redirect = ChangeWeb();
     const [isAuth, setIsAuth] = useState<boolean | undefined>(undefined);
     const [loading, setLoading] = useState(true);
+    const [showDelete, setShowDelete] = useState(false);
     const [image, setImage] = useState<pictureForm>();
     const picTitle = useParams();
+
+    const deletePicture = async() => {
+        const baseUrl = 'https://13.52.214.140';
+        try{
+            const res = await fetch(`${baseUrl}/deletePicture/${picTitle.imageName}`, {
+                method: 'DELETE',
+                mode: 'cors',
+            });
+            if(res.ok){
+                console.log('GOOD STUFF');
+            }
+            else if(!res.ok)
+            {
+                console.log('BAD STUFF');
+            }
+        }
+        catch(error)
+        {
+            console.error("ERROR: ", error);
+        }
+    }
 
     const getPictureData = async() => {
         const baseUrl = 'https://13.52.214.140';
         try{
-            console.log(picTitle);
             const res = await fetch(`${baseUrl}/getImageData/${picTitle.imageName}`, {
                 method: 'GET',
                 mode: 'cors',
@@ -33,6 +54,15 @@ function ImageView() {
         }
     }
 
+    const checkId = () => {
+        const id = localStorage.getItem('userId');
+        console.log(id);
+        console.log(image?.userId)
+        if(String(id) === String(image?.userId)){
+            setShowDelete(true);
+        }
+    }
+
     useEffect(() => {
         const checkAuthentication = async () => {
             const result = await Authenticate();
@@ -40,11 +70,17 @@ function ImageView() {
                 redirect('/home');
             }
             setIsAuth(result);
-            getPictureData();
+            await getPictureData();
             setLoading(false);
             };
         checkAuthentication();
     }, []);
+
+    useEffect(() => {
+        if (image) {
+            checkId();
+        }
+    }, [image]);
 
     if(loading){
         return <div></div>
@@ -63,6 +99,7 @@ function ImageView() {
             <div>
                 <h1> Title: {image?.picTitle}</h1>
                 <h1> Description: {image?.picDescription}</h1>
+                <button onClick={deletePicture} style={{display: showDelete? 'inline-block' : 'none'}} className="CustomButton1"> DELETE </button>
                 <button className="CustomButton1">LIKE</button>
             </div>
         </div>
