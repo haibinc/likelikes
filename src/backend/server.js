@@ -190,6 +190,7 @@ const validateToken = (req, res, next) => {
         console.log(req.headers.id);
         if(decodedToken.userId !== req.headers.id)
         {
+            console.log('WHAT THE FUCK IS GOING ON');
             return res.status(401).json({ message: 'Unauthorized - Invalid Id' });
         }
         next();
