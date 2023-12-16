@@ -186,7 +186,9 @@ const validateToken = (req, res, next) => {
     }
     try {
         const decodedToken = jwt.verify(token, secretKey);
-        if(decodedToken.userId !== req.headers.userId)
+        console.log(decodedToken.userId);
+        console.log(req.headers.id);
+        if(decodedToken.userId !== req.headers.id)
         {
             return res.status(401).json({ message: 'Unauthorized - Invalid Id' });
         }
@@ -248,7 +250,6 @@ app.get('/getImageData/:picTitle', async(req, res) => {
     try{
         const sqlSelect = "SELECT * FROM imageData WHERE picTitle = ?";
         const [rows, fields] = await dbImages.execute(sqlSelect, [req.params.picTitle]);
-        console.log(rows);
         const params = {
             Bucket: process.env.REACT_APP_BUCKET_NAME,
             Key: rows[0].imageName,
