@@ -186,11 +186,11 @@ const validateToken = (req, res, next) => {
     }
     try {
         const decodedToken = jwt.verify(token, secretKey);
-        if(decodedToken.userId !== req.headers.id)
+        if(decodedToken.userId != req.headers.id)
         {
             console.log("userId: " + decodedToken.userId);
             console.log("id: " + req.headers.id);
-            console.log('WHAT THE FUCK IS GOING ON');
+            console.log('WHAT IS GOING ON');
             return res.status(401).json({ message: 'Unauthorized - Invalid Id' });
         }
         next();
