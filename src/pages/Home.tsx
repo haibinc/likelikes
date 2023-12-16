@@ -103,19 +103,23 @@ function Home() {
                 </div>
             </div>
             <div style={{display: isAuth ? 'block' : 'none'}}>
-                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                <div style={{display: 'flex', justifyContent: 'flex-end', position:'relative'}}>
                     <button
                         style={{marginTop: '1.75rem', height: '2rem', alignSelf: 'start', position: 'fixed', left: '1rem', backgroundColor: 'peru'}}
                         onClick={() => redirect('/home')}
                         className="CustomButton1">Home
                     </button>
                     <button className="CustomButton1" onClick={() => redirect('/create')}
-                            style={{backgroundColor: 'sienna', minWidth: '4.5rem', marginTop: '1.75rem', marginRight: '30vw', height: '2rem'}}>
+                            style={{backgroundColor: 'sienna', minWidth: '4.5rem', marginTop: '1.75rem', height: '2rem'}}>
                         CREATE
                     </button>
-                    <h1 style={{marginRight: '35vw'}}> WELCOME </h1>
+                    <button className="CustomButton1"
+                            style={{backgroundColor: 'thistle', minWidth: '4.5rem', marginTop: '1.75rem', height: '2rem'}}>
+                        LIKES
+                    </button>
                     <button className="CustomButton1" onClick={signOut}
-                            style={{backgroundColor: 'mediumaquamarine', minWidth: '4.5rem', marginTop: '1.75rem', marginRight: '2rem', height: '2rem'}}> Sign
+                            style={{backgroundColor: 'mediumaquamarine', minWidth: '4.5rem',
+                                marginTop: '1.75rem', marginRight: '2rem', height: '2rem'}}> Sign
                         Out
                     </button>
                 </div>

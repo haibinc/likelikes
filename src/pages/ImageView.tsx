@@ -21,6 +21,7 @@ function ImageView() {
             });
             if(res.ok){
                 console.log('GOOD STUFF');
+                redirect('/home')
             }
             else if(!res.ok)
             {
@@ -85,7 +86,7 @@ function ImageView() {
     }
 
     return (
-        <div>
+        <div style={{backgroundColor: 'tan', height:'100vh', width:'100vw', position:'absolute', overflow:'auto'}}>
             <div>
                 <button style={{marginTop:'1.75rem', height:'2rem', alignSelf: 'start', position:'fixed', left:'1rem', backgroundColor: 'peru'}} onClick={() => redirect('/home')}
                         className="CustomButton1">Home

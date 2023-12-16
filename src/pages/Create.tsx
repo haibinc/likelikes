@@ -78,7 +78,7 @@ function Create() {
 
 
     return (
-        <div>
+        <div style={{backgroundColor: 'bisque', height:'100vh', width:'100vw', position:'absolute', overflow:'auto'}}>
             <div>
                 <button style={{marginTop: '1.5rem', alignSelf: 'start', position:'fixed', left:'1rem', backgroundColor: 'peru'}} onClick={() => redirect('/home')}
                         className="CustomButton1">Home
