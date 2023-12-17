@@ -26,12 +26,21 @@
 .CenterContainer {
   display: flex;
   justify-content: center;
+  align-self: center;
+  align-content: center;
   margin-left: 35vw;
-  min-height: 90vh;
-  width: 30vw;
+  max-height: 45rem;
+  min-height: 35rem;
+  min-width: 25rem;
+  max-width: 30rem;
   border: 0.01rem solid white;
   border-radius: 2rem;
   background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  transform: translate(-50%, -50%);
+
 }
 
 .FormContainer{
