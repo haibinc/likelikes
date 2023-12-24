@@ -5,7 +5,9 @@
 /.pnp
 .pnp.js
 .env
-
+src/backend/BC3C2121F021FF610960E2DCA9A1A16F.txt
+src/backend/certificate.crt
+src/backend/private.key
 # testing
 /coverage
 

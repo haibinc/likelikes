@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
-import LoginPage from './LoginPage';
-import SignupPage from "./SignupPage";
+import LoginPage from '../Components/LoginPage';
+import SignupPage from "../Components/SignupPage";
 import Authenticate from "../Components/Authenticate";
 import {ChangeWeb} from "../Components/ChangeWeb";
 import ImageBoard from "../Components/ImageBoard";
@@ -114,6 +114,7 @@ function Home() {
                         CREATE
                     </button>
                     <button className="CustomButton1"
+                            onClick={() => redirect('/page')}
                             style={{backgroundColor: 'thistle', minWidth: '4.5rem', marginTop: '1.75rem', height: '2rem'}}>
                         LIKES
                     </button>

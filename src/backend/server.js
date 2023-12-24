@@ -261,6 +261,15 @@ app.get('/getImageData/:picTitle', async(req, res) => {
     }
 })
 
+app.post('/addLike/:picTitle', async (req, res) => {
+    try{
+
+    }
+    catch(error){
+        console.error('Error: ', error);
+    }
+})
+
 app.delete('/deletePicture/:picTitle', async(req,res) => {
     try{
         const sqlSelect = "SELECT * FROM imageData WHERE picTitle = ?";
