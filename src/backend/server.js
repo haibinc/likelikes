@@ -274,17 +274,13 @@ app.delete('/deletePicture/:picTitle', async(req,res) => {
     try{
         const sqlSelect = "SELECT * FROM imageData WHERE picTitle = ?";
         const [rows, fields] = await dbImages.execute(sqlSelect, [req.params.picTitle]);
-        console.log("error 0")
         if(rows.length > 0){
             const params = {
                 Bucket: process.env.REACT_APP_BUCKET_NAME,
                 Key: rows[0].imageName,
             }
-            console.log("error 0.5")
             const command = new DeleteObjectCommand(params);
-            console.log("error 1")
             await s3.send(command);
-            console.log("error 2")
             const sqlDelete = "DELETE FROM imageData WHERE picTitle = ?";
             await dbImages.execute(sqlDelete, [req.params.picTitle]);
             res.status(200).send('Image deleted successfully');
