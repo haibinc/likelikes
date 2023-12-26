@@ -255,7 +255,7 @@ app.get('/getImageData/:picTitle', async(req, res) => {
         const command = new GetObjectCommand(params);
         const url = await getSignedUrl(s3, command, {expiredIn: 3600});
         rows[0].imageUrl = url;
-        res.send(rows);
+        return res.send(rows);
     }catch(error){
         console.error('Error', error);
     }
@@ -292,10 +292,10 @@ app.post('/addLike/:picTitle', async (req, res) => {
             const sqlInsert = "INSERT into likes (userId, imageName) VALUES (?, ?)";
             const [values] = [req.body, req.params.picTitle];
             await dbLogin.execute(sqlInsert, values);
-            res.send(200).send("Liked successfully");
+            return res.status(200).send("Liked successfully");
         }
         else{
-            res.send(400).send("You already liked this");
+            return res.status(400).send("You already liked this");
         }
     }
     catch(error){
