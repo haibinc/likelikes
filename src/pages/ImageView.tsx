@@ -26,7 +26,6 @@ function ImageView() {
                 console.log('BAD STUFF');
             }
         } catch (error) {
-            console.log('qoewibqwoe');
             console.error("ERROR: ", error);
         }
     }

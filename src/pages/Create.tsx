@@ -22,6 +22,15 @@ function Create() {
         checkAuthentication();
     }, [isAuth]);
 
+    useEffect( () => {
+        if(imgSource){
+            setIsFileSelected(true);
+        }
+        else{
+            setIsFileSelected(false);
+        }
+    }, [imgSource])
+
     const handleFileInput = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if(file){
@@ -30,7 +39,6 @@ function Create() {
             reader.onloadend = () => setImgSource(reader.result as string);
             reader.readAsDataURL(file);
         }
-        setIsFileSelected((prev) => !prev);
     }
 
     const submitForm = async (e: React.SyntheticEvent) => {

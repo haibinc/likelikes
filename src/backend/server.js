@@ -246,7 +246,7 @@ app.get('/getImagePosts', async(req,res) => {
 
 app.get('/getImageData/:picTitle', async(req, res) => {
     try{
-        const sqlSelect = "SELECT * FROM imageData WHERE picTitle = ?";
+        const sqlSelect = "SELECT * FROM imageData WHERE imageName = ?";
         const [rows, fields] = await dbImages.execute(sqlSelect, [req.params.picTitle]);
         const params = {
             Bucket: process.env.REACT_APP_BUCKET_NAME,
@@ -272,7 +272,7 @@ app.post('/addLike/:picTitle', async (req, res) => {
 
 app.delete('/deletePicture/:picTitle', async(req,res) => {
     try{
-        const sqlSelect = "SELECT * FROM imageData WHERE picTitle = ?";
+        const sqlSelect = "SELECT * FROM imageData WHERE imageName = ?";
         const [rows, fields] = await dbImages.execute(sqlSelect, [req.params.picTitle]);
         if(rows.length > 0){
             const params = {
@@ -281,7 +281,7 @@ app.delete('/deletePicture/:picTitle', async(req,res) => {
             }
             const command = new DeleteObjectCommand(params);
             await s3.send(command);
-            const sqlDelete = "DELETE FROM imageData WHERE picTitle = ?";
+            const sqlDelete = "DELETE FROM imageData WHERE imageName = ?";
             await dbImages.execute(sqlDelete, [req.params.picTitle]);
             res.status(200).send('Image deleted successfully');
         }

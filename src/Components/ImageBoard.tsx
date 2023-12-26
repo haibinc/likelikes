@@ -44,7 +44,7 @@ function ImageBoard() {
             >
                 {images.map((image) => (
                     <div key={image.imageName}>
-                        <img src={image.imageUrl} onClick={() => redirect(`/image/${image.picTitle}`)} alt={image.picTitle} />
+                        <img src={image.imageUrl} onClick={() => redirect(`/image/${image.imageName}`)} alt={image.picTitle} />
                     </div>
                 ))}
             </Masonry>
