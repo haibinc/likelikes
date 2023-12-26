@@ -9,6 +9,7 @@ function ImageView() {
     const [isAuth, setIsAuth] = useState<boolean | undefined>(undefined);
     const [loading, setLoading] = useState(true);
     const [showDelete, setShowDelete] = useState(false);
+    const [likeText, setLikeText] = useState('LIKE')
     const [image, setImage] = useState<pictureForm>();
     const picTitle = useParams();
 
@@ -57,6 +58,12 @@ function ImageView() {
     }
 
     const handleLike = async () => {
+        if(likeText === 'LIKE'){
+            setLikeText('LIKED');
+        }
+        else if(likeText === 'LIKED'){
+            setLikeText('LIKE');
+        }
         const baseUrl = 'https://13.52.214.140';
         const id = localStorage.getItem('userId');
         try {
@@ -114,7 +121,7 @@ function ImageView() {
                 <button onClick={deletePicture} style={{display: showDelete ? 'inline-block' : 'none'}}
                         className="CustomButton1"> DELETE
                 </button>
-                <button className="CustomButton1" onClick={handleLike}>LIKE</button>
+                <button className="CustomButton1" style={{backgroundColor: likeText === 'LIKE' ? 'red' : 'blue'}} onClick={handleLike}>{likeText}</button>
             </div>
         </div>
     );

@@ -261,15 +261,6 @@ app.get('/getImageData/:picTitle', async(req, res) => {
     }
 })
 
-app.post('/addLike/:picTitle', async (req, res) => {
-    try{
-
-    }
-    catch(error){
-        console.error('Error: ', error);
-    }
-})
-
 app.delete('/deletePicture/:picTitle', async(req,res) => {
     try{
         const sqlSelect = "SELECT * FROM imageData WHERE imageName = ?";
@@ -290,6 +281,19 @@ app.delete('/deletePicture/:picTitle', async(req,res) => {
         }
     }catch(error){
         console.error('Error', error);
+    }
+})
+
+app.post('/addLike/:picTitle', async (req, res) => {
+    console.log(req.params);
+    console.log(req.body);
+    try{
+        // const sqlInsert = "INSERT into likes (userId, imageName) VALUES (?, ?)";
+        // const [values] = [req.body, req.params];
+        // await dbLogin.execute(sqlInsert, values);
+    }
+    catch(error){
+        console.error('Error: ', error);
     }
 })
 
