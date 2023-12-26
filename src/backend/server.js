@@ -332,6 +332,7 @@ app.get('/getLikes/:id', async(req, res) => {
         const command = new GetObjectCommand(params);
         const url = await getSignedUrl(s3, command, {expiredIn: 3600});
         rows[0].imageUrl = url;
+        console.log(rows);
         return res.status(200).send(rows);
     }
     catch(error){

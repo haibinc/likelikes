@@ -24,6 +24,7 @@ function Likes() {
                 });
                 if (response.ok) {
                     const res = await response.json();
+                    console.log(res);
                     setImages(res);
                 }
                 else{
@@ -45,19 +46,19 @@ function Likes() {
                     className="CustomButton1">Home
                 </button>
             </div>
-            {/*<div>*/}
-            {/*    <Masonry*/}
-            {/*        breakpointCols={breakpointColumnsObj}*/}
-            {/*        className="my-masonry-grid"*/}
-            {/*        columnClassName="my-masonry-grid_column"*/}
-            {/*    >*/}
-            {/*        {images.map((image) => (*/}
-            {/*            <div key={image.imageName}>*/}
-            {/*                <img src={image.imageUrl} onClick={() => redirect(`/image/${image.imageName}`)} alt={image.picTitle} />*/}
-            {/*            </div>*/}
-            {/*        ))}*/}
-            {/*    </Masonry>*/}
-            {/*</div>*/}
+            <div>
+                <Masonry
+                    breakpointCols={breakpointColumnsObj}
+                    className="my-masonry-grid"
+                    columnClassName="my-masonry-grid_column"
+                >
+                    {images.map((image) => (
+                        <div key={image.imageName}>
+                            <img src={image.imageUrl} onClick={() => redirect(`/image/${image.imageName}`)} alt={image.picTitle} />
+                        </div>
+                    ))}
+                </Masonry>
+            </div>
         </div>
     );
 }
