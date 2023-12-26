@@ -70,7 +70,7 @@ function ImageView() {
             const res = await fetch(`${baseUrl}/addLike/${picTitle.imageName}`, {
                 method: "POST",
                 mode: "cors",
-                body: '12',
+                body: id,
                 headers: {
                     'Content-Type': 'text/plain'
                 }

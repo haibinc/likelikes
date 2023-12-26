@@ -119,7 +119,6 @@ async function testDatabaseConnection() {
     }
 }
 
-
 const dbImages = mysql.createPool({
     host: process.env.REACT_APP_MYSQL_HOST,
     user: process.env.REACT_APP_MYSQL_USER,
@@ -286,12 +285,18 @@ app.delete('/deletePicture/:picTitle', async(req,res) => {
 })
 
 app.post('/addLike/:picTitle', async (req, res) => {
-    console.log("imageName: " + req.params.picTitle);
-    console.log("id : " + req.body);
     try{
-        // const sqlInsert = "INSERT into likes (userId, imageName) VALUES (?, ?)";
-        // const [values] = [req.body, req.params.picTitle];
-        // await dbLogin.execute(sqlInsert, values);
+        const sqlSelect = "SELECT * FROM likes WHERE imageName = ?";
+        const [rows, fields] = dbLogin.execute(sqlSelect, req.params.picTitle);
+        if(!rows){
+            const sqlInsert = "INSERT into likes (userId, imageName) VALUES (?, ?)";
+            const [values] = [req.body, req.params.picTitle];
+            await dbLogin.execute(sqlInsert, values);
+            res.send(200).send("Liked successfully");
+        }
+        else{
+            res.send(400).send("You already liked this");
+        }
     }
     catch(error){
         console.error('Error: ', error);
