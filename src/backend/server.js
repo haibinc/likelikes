@@ -288,11 +288,10 @@ app.post('/addLike/:picTitle', async (req, res) => {
     try{
         const sqlSelect = "SELECT * FROM likes WHERE imageName = ?";
         const [rows, fields] = await dbLogin.execute(sqlSelect, [req.params.picTitle]);
-        console.log(req.body);
         if(rows.length <= 0){
             console.log('SENDING INFO')
             const sqlInsert = "INSERT INTO likes (userId, imageName) VALUES (?, ?)";
-            const [values] = [req.body, req.params.picTitle];
+            const values = [req.body, req.params.picTitle];
             await dbLogin.execute(sqlInsert, values);
             return res.status(200).send("Liked successfully");
         }
