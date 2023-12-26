@@ -284,7 +284,7 @@ app.delete('/deletePicture/:picTitle', async(req,res) => {
     }
 })
 
-app.post('/addLike/:picTitle', async (req, res) => {
+app.post('/handleLike/:picTitle', async (req, res) => {
     try{
         const sqlSelect = "SELECT * FROM likes WHERE imageName = ?";
         const [rows, fields] = await dbLogin.execute(sqlSelect, [req.params.picTitle]);
@@ -296,8 +296,9 @@ app.post('/addLike/:picTitle', async (req, res) => {
             return res.status(200).send("Liked successfully");
         }
         else if(rows){
-            console.log('ERROR SPOT')
-            return res.status(400).send("You already liked this");
+            const sqlDelete = "DELETE FROM likes WHERE imageName = ?";
+            await dbLogin.execute(sqlDelete, [req.params.picTitle]);
+            return res.status(200).send("Deleted successfully");
         }
     }
     catch(error){

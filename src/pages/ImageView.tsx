@@ -67,7 +67,7 @@ function ImageView() {
         const baseUrl = 'https://13.52.214.140';
         const id = localStorage.getItem('userId');
         try {
-            const res = await fetch(`${baseUrl}/addLike/${picTitle.imageName}`, {
+            const res = await fetch(`${baseUrl}/handleLike/${picTitle.imageName}`, {
                 method: "POST",
                 mode: "cors",
                 body: id,
@@ -75,6 +75,15 @@ function ImageView() {
                     'Content-Type': 'text/plain'
                 }
             })
+            if(res.ok)
+            {
+                const response = res.text();
+                console.log(response);
+            }
+            else{
+                const response = res.text();
+                console.log("Error: " + response);
+            }
         } catch (err) {
             console.error("Error: ", err)
         }
