@@ -321,6 +321,25 @@ app.get('/checkLike/:picTitle', async(req, res) => {
     }
 })
 
+app.get('/getLikes/:id', async(req, res) => {
+    try{
+        const sqlSelect = "SELECT * FROM likes WHERE id = ?";
+        const [rows, fields] = await dbLogin.execute(sqlSelect, [id]);
+        const params = {
+            Bucket: process.env.REACT_APP_BUCKET_NAME,
+            Key: rows[0].imageName,
+        }
+        const command = new GetObjectCommand(params);
+        const url = await getSignedUrl(s3, command, {expiredIn: 3600});
+        rows[0].imageUrl = url;
+        return res.status(200).send(rows);
+    }
+    catch(error){
+        console.error("Error :", error);
+    }
+
+})
+
 app.post('/passwordRecovery', async(req, res) => {
     console.log('something');
 

@@ -12,9 +12,9 @@ function ImageView() {
     const [likeText, setLikeText] = useState('LIKE')
     const [image, setImage] = useState<pictureForm>();
     const picTitle = useParams();
+    const baseUrl = 'https://13.52.214.140';
 
     const deletePicture = async () => {
-        const baseUrl = 'https://13.52.214.140';
         try {
             const res = await fetch(`${baseUrl}/deletePicture/${picTitle.imageName}`, {
                 method: 'DELETE',
@@ -32,7 +32,6 @@ function ImageView() {
     }
 
     const getPictureData = async () => {
-        const baseUrl = 'https://13.52.214.140';
         try {
             const res = await fetch(`${baseUrl}/getImageData/${picTitle.imageName}`, {
                 method: 'GET',
@@ -58,7 +57,6 @@ function ImageView() {
     }
 
     const handleLike = async () => {
-        const baseUrl = 'https://13.52.214.140';
         const id = localStorage.getItem('userId');
         try {
             const res = await fetch(`${baseUrl}/handleLike/${picTitle.imageName}`, {
@@ -72,11 +70,11 @@ function ImageView() {
             if(res.ok)
             {
                 const response = await res.text();
-                if(response === 'LIKED'){
-                    setLikeText('LIKE')
+                if(response.trim() === "Liked successfully"){
+                    setLikeText((prevLikeText) => (prevLikeText === 'LIKE' ? 'LIKED' : 'LIKED'));
                 }
-                else if(response === 'LIKE'){
-                    setLikeText('LIKED');
+                else if(response.trim() === 'Deleted successfully'){
+                    setLikeText((prevLikeText) => (prevLikeText === 'LIKED' ? 'LIKE' : 'LIKE'));
                 }
             }
             else{
@@ -105,8 +103,10 @@ function ImageView() {
         if (image) {
             checkId();
         }
+    }, [image]);
+
+    useEffect( () => {
         const fetchLikes = async() => {
-            const baseUrl = 'https://13.52.214.140';
             try{
                 const res = await fetch(`${baseUrl}/checkLike/${picTitle.imageName}`, {
                     method: "GET",
@@ -114,10 +114,11 @@ function ImageView() {
                 })
                 if(res.ok){
                     const response = await res.text();
-                    if(response === 'LIKED'){
+                    console.log("USE EFFECT");
+                    if(response.trim() === 'LIKED'){
                         setLikeText('LIKED')
                     }
-                    else if(response === 'LIKE'){
+                    else if(response.trim() === 'LIKE'){
                         setLikeText('LIKE');
                     }
                 }
@@ -127,7 +128,7 @@ function ImageView() {
                 console.error("Error: ", error);
             }
         }; fetchLikes();
-    }, [image]);
+    }, []);
 
     if (loading) {
         return <div></div>

@@ -114,7 +114,7 @@ function Home() {
                         CREATE
                     </button>
                     <button className="CustomButton1"
-                            onClick={() => redirect('/page')}
+                            onClick={() => redirect('/likes')}
                             style={{backgroundColor: 'thistle', minWidth: '4.5rem', marginTop: '1.75rem', height: '2rem'}}>
                         LIKES
                     </button>
