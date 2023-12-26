@@ -286,13 +286,12 @@ app.delete('/deletePicture/:picTitle', async(req,res) => {
 
 app.post('/addLike/:picTitle', async (req, res) => {
     try{
-        console.log('NOTHING YET');
         const sqlSelect = "SELECT * FROM likes WHERE imageName = ?";
         const [rows, fields] = await dbLogin.execute(sqlSelect, [req.params.picTitle]);
-        console.log('oh dayumm');
+        console.log(req.body.id);
         if(rows.length <= 0){
             console.log('SENDING INFO')
-            const sqlInsert = "INSERT into likes (userId, imageName) VALUES (?, ?)";
+            const sqlInsert = "INSERT INTO likes (userId, imageName) VALUES (?, ?)";
             const [values] = [req.body, req.params.picTitle];
             await dbLogin.execute(sqlInsert, values);
             return res.status(200).send("Liked successfully");
