@@ -58,12 +58,6 @@ function ImageView() {
     }
 
     const handleLike = async () => {
-        if(likeText === 'LIKE'){
-            setLikeText('LIKED');
-        }
-        else if(likeText === 'LIKED'){
-            setLikeText('LIKE');
-        }
         const baseUrl = 'https://13.52.214.140';
         const id = localStorage.getItem('userId');
         try {
@@ -77,11 +71,16 @@ function ImageView() {
             })
             if(res.ok)
             {
-                const response = res.text();
-                console.log(response);
+                const response = await res.text();
+                if(response === 'LIKED'){
+                    setLikeText('LIKE')
+                }
+                else if(response === 'LIKE'){
+                    setLikeText('LIKED');
+                }
             }
             else{
-                const response = res.text();
+                const response = await res.text();
                 console.log("Error: " + response);
             }
         } catch (err) {
@@ -106,6 +105,28 @@ function ImageView() {
         if (image) {
             checkId();
         }
+        const fetchLikes = async() => {
+            const baseUrl = 'https://13.52.214.140';
+            try{
+                const res = await fetch(`${baseUrl}/checkLike/${picTitle.imageName}`, {
+                    method: "GET",
+                    mode: "cors",
+                })
+                if(res.ok){
+                    const response = await res.text();
+                    if(response === 'LIKED'){
+                        setLikeText('LIKED')
+                    }
+                    else if(response === 'LIKE'){
+                        setLikeText('LIKE');
+                    }
+                }
+            }
+            catch(error)
+            {
+                console.error("Error: ", error);
+            }
+        }; fetchLikes();
     }, [image]);
 
     if (loading) {
