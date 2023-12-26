@@ -46,6 +46,9 @@ function Home() {
         const checkAuthentication = async () => {
             const result = await Authenticate();
             setIsAuth(result);
+            if(result === false){
+                window.location.reload();
+            }
             setLoading(false);
         };
         checkAuthentication();

@@ -20,6 +20,7 @@ function Likes() {
             const result = await Authenticate();
             if (result === false) {
                 redirect('/home');
+                window.location.reload();
             }
             // setIsAuth(result);
             // await getPictureData();
@@ -39,7 +40,6 @@ function Likes() {
                 });
                 if (response.ok) {
                     const res = await response.json();
-                    console.log(res);
                     setImages(res);
                 }
                 else{

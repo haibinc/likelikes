@@ -326,17 +326,19 @@ app.get('/getLikes/:id', async(req, res) => {
         console.log("id: " + req.params.id);
         const sqlSelect = "SELECT * FROM likes WHERE userId = ?";
         const [rows, fields] = await dbLogin.execute(sqlSelect, [req.params.id]);
-        console.log(1);
-        const params = {
-            Bucket: process.env.REACT_APP_BUCKET_NAME,
-            Key: rows[0].imageName,
+        if(rows){
+            for(let post of rows){
+                const params = {
+                    Bucket: process.env.REACT_APP_BUCKET_NAME,
+                    Key: post.imageName,
+                }
+                const command = new GetObjectCommand(params);
+                const url = await getSignedUrl(s3, command, {expiredIn: 3600});
+                post.imageUrl = url;
+            }
+            console.log(rows);
+            return res.status(200).send(rows);
         }
-        console.log("2");
-        const command = new GetObjectCommand(params);
-        const url = await getSignedUrl(s3, command, {expiredIn: 3600});
-        rows[0].imageUrl = url;
-        console.log(rows);
-        return res.status(200).send(rows);
     }
     catch(error){
         console.error("Error :", error);
