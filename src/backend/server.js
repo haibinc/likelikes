@@ -324,7 +324,7 @@ app.get('/checkLike/:picTitle', async(req, res) => {
 app.get('/getLikes/:id', async(req, res) => {
     try{
         const sqlSelect = "SELECT * FROM likes WHERE id = ?";
-        const [rows, fields] = await dbLogin.execute(sqlSelect, [id]);
+        const [rows, fields] = await dbLogin.execute(sqlSelect, [req.params.id]);
         const params = {
             Bucket: process.env.REACT_APP_BUCKET_NAME,
             Key: rows[0].imageName,

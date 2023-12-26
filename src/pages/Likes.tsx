@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {ChangeWeb} from '../Components/ChangeWeb'
 import Masonry from 'react-masonry-css';
 import {pictureForm} from "../types/form";
+import Authenticate from "../Components/Authenticate";
 
 const breakpointColumnsObj = {
     default: 4,
@@ -12,6 +13,20 @@ const breakpointColumnsObj = {
 function Likes() {
     const redirect = ChangeWeb();
     const [images, setImages] = useState<pictureForm[]>([]);
+
+
+    useEffect(() => {
+        const checkAuthentication = async () => {
+            const result = await Authenticate();
+            if (result === false) {
+                redirect('/home');
+            }
+            // setIsAuth(result);
+            // await getPictureData();
+            // setLoading(false);
+        };
+        checkAuthentication();
+    }, []);
 
     useEffect( () => {
         const fetchImages = async () => {
