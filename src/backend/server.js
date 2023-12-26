@@ -23,6 +23,7 @@ app.use(cors());
 app.use(express.json());
 // app.use(express.urlencoded({extended: true}));
 app.use(bodyParser.text());
+app.use(express.text());
 dotenv.config();
 
 const cred = {
@@ -286,7 +287,7 @@ app.delete('/deletePicture/:picTitle', async(req,res) => {
 
 app.post('/addLike/:picTitle', async (req, res) => {
     console.log("imageName: " + req.params.picTitle);
-    console.log("id : " + req.body.id);
+    console.log("id : " + req.body);
     try{
         // const sqlInsert = "INSERT into likes (userId, imageName) VALUES (?, ?)";
         // const [values] = [req.body, req.params.picTitle];
