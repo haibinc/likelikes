@@ -287,7 +287,7 @@ app.delete('/deletePicture/:picTitle', async(req,res) => {
 app.post('/addLike/:picTitle', async (req, res) => {
     try{
         const sqlSelect = "SELECT * FROM likes WHERE imageName = ?";
-        const [rows, fields] = await dbLogin.execute(sqlSelect, req.params.picTitle);
+        const [rows, fields] = await dbLogin.execute(sqlSelect, [req.params.picTitle]);
         if(!rows){
             const sqlInsert = "INSERT into likes (userId, imageName) VALUES (?, ?)";
             const [values] = [req.body, req.params.picTitle];
