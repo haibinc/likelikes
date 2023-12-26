@@ -285,11 +285,11 @@ app.delete('/deletePicture/:picTitle', async(req,res) => {
 })
 
 app.post('/addLike/:picTitle', async (req, res) => {
-    console.log(req.params);
-    console.log(req.body);
+    console.log("imageName: " + req.params.picTitle);
+    console.log("id : " + req.body.id);
     try{
         // const sqlInsert = "INSERT into likes (userId, imageName) VALUES (?, ?)";
-        // const [values] = [req.body, req.params];
+        // const [values] = [req.body, req.params.picTitle];
         // await dbLogin.execute(sqlInsert, values);
     }
     catch(error){
