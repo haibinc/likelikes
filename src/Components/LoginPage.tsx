@@ -50,7 +50,7 @@ function LoginPage({closeLogin} : LoginPageProps) {
             {
                 const errorCode = await res.text();
                 console.log("Error code: " + errorCode);
-                if(errorCode === 'Email not found.')
+                if(errorCode === 'Email not found')
                 {
                     dispatch({type:'SET_FIELD', field:'emailMessage', value:errorCode});
                     dispatch({type:'SET_FIELD', field:'passwordMessage', value:''});
@@ -62,6 +62,13 @@ function LoginPage({closeLogin} : LoginPageProps) {
                     dispatch({type:'SET_FIELD', field:'passwordMessage', value:errorCode});
                     dispatch({type:'SET_FIELD', field:'successMessage', value:''});
                 }
+                else if(errorCode === 'Passwords must be at least 8-20 characters and must contain one lowercase letter, one uppercase letter, and one number')
+                {
+                    dispatch({type:'SET_FIELD', field:'emailMessage', value:''});
+                    dispatch({type:'SET_FIELD', field:'passwordMessage', value:errorCode});
+                    dispatch({type:'SET_FIELD', field:'successMessage', value:''});
+                }
+
             }
         }
         catch(error){

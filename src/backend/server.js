@@ -158,7 +158,7 @@ app.post('/submitLogin', async (req, res) => {
         if (!isValidEmail(req.body.email)) {
             return res.status(400).send('Not a valid email address.');
         } else if (!isValidPassword(req.body.password)) {
-            return res.status(400).send('Passwords must be at least 8-20 characters and must contain one lowercase letter, one uppercase letter, and one number.');
+            return res.status(400).send('Passwords must be at least 8-20 characters and must contain one lowercase letter, one uppercase letter, and one number');
         }
         const sqlSelect = "SELECT * FROM login WHERE username = ?";
         const [rows, fields] = await dbLogin.execute(sqlSelect, [req.body.email]);
@@ -171,7 +171,7 @@ app.post('/submitLogin', async (req, res) => {
                 return res.status(400).send('Password incorrect');
             }
         } else {
-            return res.status(400).send('Email not found.');
+            return res.status(400).send('Email not found');
         }
     } catch (err) {
         console.error('Error:', err);
