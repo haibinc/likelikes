@@ -46,9 +46,6 @@ function Home() {
         const checkAuthentication = async () => {
             const result = await Authenticate();
             setIsAuth(result);
-            if(result === false){
-                window.location.reload();
-            }
             setLoading(false);
         };
         checkAuthentication();
@@ -91,17 +88,17 @@ function Home() {
                         className="my-masonry-grid"
                         columnClassName="my-masonry-grid_column"
                     >
-                        <img src="https://scion-social.com/wp-content/uploads/2016/07/gif-wallpaper-13.gif" alt="aniamtedgif"/>
-                        <img src="https://qph.cf2.quoracdn.net/main-qimg-3a7273395f005dc08ee2b4f006b35613" />
-                        <img src="https://i0.wp.com/66.media.tumblr.com/e1a2edf664e0193357a152f390292a8e/tumblr_nishpyDPLK1qhv2wyo1_500.gif?resize=549%2C732&ssl=1"/>
-                        <img src="https://i0.wp.com/66.media.tumblr.com/80f4eb5f327b21e92815ef4690628491/tumblr_nigusqZx1Y1qhv2wyo1_r1_500.gif?resize=549%2C659&ssl=1"/>
-                        <img src="https://i.pinimg.com/originals/7b/90/5c/7b905cf64bc28814451d91624b651745.gif"/>
-                        <img src="https://www.altushost.com/wp-content/uploads/2016/02/tumblr_n0iatyY57p1rpbikxo1_500.gif"/>
-                        <img src="https://steamuserimages-a.akamaihd.net/ugc/97230938372796271/55E6E36D887714CE7C8BD17BAF2BB745401E89BB/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false"/>
-                        <img src="https://i.pinimg.com/originals/62/9a/af/629aaf3e2c11c0b96655ece18013e568.gif"/>
-                        <img src="https://cdn.shopify.com/s/files/1/0633/5417/5743/files/tumblr_37a43647174cf99f19833b8b4f893ac3_be0d5f30_540_480x480.gif?v=1687525312"/>
-                        <img src="https://media.tenor.com/xMQiT3Xb3CEAAAAC/2099-spider-man-2099.gif"/>
-                        <img src="https://media4.giphy.com/media/1qErVv5GVUac8uqBJU/giphy.gif"/>
+                        <img src="https://scion-social.com/wp-content/uploads/2016/07/gif-wallpaper-13.gif" alt="animatedgif" loading="lazy"/>
+                        <img src="https://qph.cf2.quoracdn.net/main-qimg-3a7273395f005dc08ee2b4f006b35613" loading="lazy"/>
+                        <img src="https://i0.wp.com/66.media.tumblr.com/e1a2edf664e0193357a152f390292a8e/tumblr_nishpyDPLK1qhv2wyo1_500.gif?resize=549%2C732&ssl=1" loading="lazy"/>
+                        <img src="https://i0.wp.com/66.media.tumblr.com/80f4eb5f327b21e92815ef4690628491/tumblr_nigusqZx1Y1qhv2wyo1_r1_500.gif?resize=549%2C659&ssl=1" loading="lazy"/>
+                        <img src="https://i.pinimg.com/originals/7b/90/5c/7b905cf64bc28814451d91624b651745.gif" loading="lazy"/>
+                        <img src="https://www.altushost.com/wp-content/uploads/2016/02/tumblr_n0iatyY57p1rpbikxo1_500.gif" loading="lazy"/>
+                        <img src="https://steamuserimages-a.akamaihd.net/ugc/97230938372796271/55E6E36D887714CE7C8BD17BAF2BB745401E89BB/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" loading="lazy"/>
+                        <img src="https://i.pinimg.com/originals/62/9a/af/629aaf3e2c11c0b96655ece18013e568.gif" loading="lazy"/>
+                        <img src="https://cdn.shopify.com/s/files/1/0633/5417/5743/files/tumblr_37a43647174cf99f19833b8b4f893ac3_be0d5f30_540_480x480.gif?v=1687525312" loading="lazy"/>
+                        <img src="https://media.tenor.com/xMQiT3Xb3CEAAAAC/2099-spider-man-2099.gif" loading="lazy"/>
+                        <img src="https://media4.giphy.com/media/1qErVv5GVUac8uqBJU/giphy.gif" loading="lazy"/>
                     </Masonry>
                 </div>
             </div>

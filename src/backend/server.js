@@ -171,7 +171,7 @@ app.post('/submitLogin', async (req, res) => {
                 return res.status(400).send('Password incorrect');
             }
         } else {
-            return res.status(400).send('Email not found');
+            return res.status(400).send('Email not found.');
         }
     } catch (err) {
         console.error('Error:', err);

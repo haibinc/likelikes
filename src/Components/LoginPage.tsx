@@ -50,7 +50,7 @@ function LoginPage({closeLogin} : LoginPageProps) {
             {
                 const errorCode = await res.text();
                 console.log("Error code: " + errorCode);
-                if(errorCode === 'Not a valid email address.')
+                if(errorCode === 'Email not found.')
                 {
                     dispatch({type:'SET_FIELD', field:'emailMessage', value:errorCode});
                     dispatch({type:'SET_FIELD', field:'passwordMessage', value:''});

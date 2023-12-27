@@ -20,7 +20,6 @@ function Likes() {
             const result = await Authenticate();
             if (result === false) {
                 redirect('/home');
-                window.location.reload();
             }
             // setIsAuth(result);
             // await getPictureData();
@@ -53,7 +52,7 @@ function Likes() {
     }, [])
 
     return (
-        <div>
+        <div style={{backgroundColor: 'black', height:'100vh', width:'100vw', position:'absolute', overflow:'auto'}}>
             <div>
                 <button
                     style={{marginTop: '1.75rem', height: '2rem', alignSelf: 'start', position: 'fixed', left: '1rem', backgroundColor: 'peru'}}
@@ -61,6 +60,7 @@ function Likes() {
                     className="CustomButton1">Home
                 </button>
             </div>
+            <h1 style={{color: 'azure'}}> LIKES </h1>
             <div>
                 <Masonry
                     breakpointCols={breakpointColumnsObj}
