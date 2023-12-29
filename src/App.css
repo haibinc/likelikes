@@ -1,6 +1,6 @@
 .App {
-  text-align: center;
-  overflow: hidden;
+  /*text-align: center;*/
+  /*overflow: hidden;*/
 }
 
 .CustomButton1{
@@ -13,6 +13,94 @@
   background-color:red;
   font-Weight: bold;
   margin-Left: 1rem;
+}
+
+.ImgSlideShowContainer{
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  overflow: hidden;
+  width: 12rem;
+}
+
+.ImgSlideShowContainer img{
+  height: 15rem;
+  width: 10rem;
+  border-radius: 8px;
+  object-fit:cover;
+  margin: 0.5rem;
+  z-index: 0;
+  animation: fadeIn 4s forwards, slideIn 2s forwards;
+}
+
+.ImgSlideShowContainer1 img{
+ scale:0;
+}
+
+.fadeText{
+  animation: fadeIn 4s forwards;
+}
+.fadeText1{
+  scale:0;
+}
+
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.HomeContainer{
+  background-color: black;
+  height:100vh;
+  width:100vw;
+  position:absolute;
+  overflow: hidden; /* Hide the scrollbar */
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+}
+
+.BlurTest{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 10vh; /* Adjust the height of the blurred area */
+  background: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8));
+  filter: blur(50px); /* Adjust the blur strength */
+  pointer-events: none;
+  z-index: 999; /* Ensure it's above other elements */
+}
+
+.snap-scroll-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  height: 100vh; /* Set the height of each section based on your requirements */
+  /*display: flex;*/
+  /*justify-content: center;*/
+  /*align-items: center;*/
+}
+
+.HomeContainer::-webkit-scrollbar {
+  width: 0; /* Set width to 0 to hide scrollbar */
+}
+
+.HomeContainer::-webkit-scrollbar-track {
+  display: none; /* Hide the scrollbar track */
 }
 
 .CustomButton1:hover{
@@ -113,7 +201,6 @@
 }
 
 .ImageViewContainer img{
-
   height: 20rem;
   border-radius: 8px;
   object-fit:cover;

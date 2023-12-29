@@ -54,7 +54,7 @@ function LoginPage({closeLogin} : LoginPageProps) {
                 {
                     dispatch({type:'SET_FIELD', field:'emailMessage', value:errorCode});
                     dispatch({type:'SET_FIELD', field:'passwordMessage', value:''});
-                    dispatch({type:'SET_FIELD', field:'successMessage', value:''});
+                    dispatch({type:'SET_FIELD', field:'successMessage', value:'Create an Account'});
                 }
                 else if(errorCode === 'Not a valid email address')
                 {

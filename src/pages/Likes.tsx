@@ -52,7 +52,7 @@ function Likes() {
     }, [])
 
     return (
-        <div style={{backgroundColor: 'black', height:'100vh', width:'100vw', position:'absolute', overflow:'auto'}}>
+        <div style={{backgroundColor: 'black', height:'100vh', width:'100vw', position:'absolute', overflow:'auto', textAlign:'center'}}>
             <div>
                 <button
                     style={{marginTop: '1.75rem', height: '2rem', alignSelf: 'start', position: 'fixed', left: '1rem', backgroundColor: 'peru'}}
