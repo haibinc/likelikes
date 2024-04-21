@@ -17,7 +17,7 @@ const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 const fs = require('fs');
 const https = require('https');
-const file = fs.readFileSync('/home/ec2-user/likelikes/src/backend/BC3C2121F021FF610960E2DCA9A1A16F.txt')
+const file = fs.readFileSync('./76CDD24B8809CC17F145778189E7E20D.txt')
 const key = fs.readFileSync('private.key');
 const cert = fs.readFileSync('certificate.crt');
 app.use(cors());
