@@ -25,7 +25,7 @@ function SignupPage({closeSignup, openLogin} : SignupPageProps) {
 
     const submitForm = async(e: React.SyntheticEvent) => {
         e.preventDefault();
-        const baseUrl = 'https://3.101.36.103';
+        const baseUrl = 'http://3.101.36.103';
         try{
             const res = await fetch(`${baseUrl}/submitSignup`, {
                 method: 'POST',
