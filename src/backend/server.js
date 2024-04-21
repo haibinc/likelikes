@@ -33,7 +33,6 @@ const cred = {
 }
 
 app.get('/.well-known/pki-validation/76CDD24B8809CC17F145778189E7E20D.txt', (req, res) => {
-    console.log("WHAT THE FUCK");
     res.send(file)
     res.sendFile('/home/ec2-user/likelikes/src/backend/76CDD24B8809CC17F145778189E7E20D.txt');
 })
