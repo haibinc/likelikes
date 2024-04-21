@@ -17,9 +17,9 @@ const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 const fs = require('fs');
 const https = require('https');
-const file = fs.readFileSync('./D7EA86285258ABA8816330CA044C7545.txt')
-const key = fs.readFileSync('./private.key');
-const cert = fs.readFileSync('./certificate.crt');
+// const file = fs.readFileSync('./D7EA86285258ABA8816330CA044C7545.txt')
+const key = fs.readFileSync('private.key');
+const cert = fs.readFileSync('certificate.crt');
 app.use(cors());
 app.use(express.json());
 // app.use(express.urlencoded({extended: true}));
