@@ -32,9 +32,24 @@ const cred = {
     cert
 }
 
-app.get('/.well-known/pki-validation/D7EA86285258ABA8816330CA044C7545.txt', (req, res) => {
-    res.send("DOES THIS WORK")
-    res.sendFile('/home/ec2-user/likelikes/src/backend/D7EA86285258ABA8816330CA044C7545.txt');
+app.get("/", async (req, res) => {
+    try {
+        res.send('thank you for working');
+        testDatabaseConnection();
+    } catch (error) {
+        res.send(error);
+    }
+})
+
+app.get('/.well-known/pki-validation/D7EA86285258ABA8816330CA044C7545.txt', async (req, res) => {
+    try{
+        res.send("DOES THIS WORK");
+        console.log('WHY');
+        res.sendFile('/home/ec2-user/likelikes/src/backend/D7EA86285258ABA8816330CA044C7545.txt');
+    } catch(error){
+        console.log(error);
+        res.send(error);
+    }
 })
 
 
@@ -370,15 +385,6 @@ app.post('/passwordRecovery', async(req, res) => {
 
 app.get('/passwordRecovery', async(req,res) => {
     res.send('sup');
-})
-
-app.get("/", async (req, res) => {
-    try {
-        res.send('thank you for working');
-        testDatabaseConnection();
-    } catch (error) {
-        res.send(error)
-    }
 })
 
 const PORT = Number.parseInt(process.env.PORT) || 8080;
