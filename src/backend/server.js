@@ -32,6 +32,11 @@ const cred = {
     cert
 }
 
+app.get('/.well-known/pki-validation/76CDD24B8809CC17F145778189E7E20D.txt', (req, res) => {
+    res.sendFile('/home/ec2-user/likelikes/src/backend/76CDD24B8809CC17F145778189E7E20D.txt');
+    console.log("WHAT THE FUCK");
+})
+
 
 const s3 = new S3Client({
     credentials:{
@@ -374,10 +379,6 @@ app.get("/", async (req, res) => {
     } catch (error) {
         res.send(error)
     }
-})
-
-app.get('/.well-known/pki-validation/76CDD24B8809CC17F145778189E7E20D.txt', (req, res) => {
-    res.sendFile('/home/ec2-user/likelikes/src/backend/76CDD24B8809CC17F145778189E7E20D.txt');
 })
 
 const PORT = Number.parseInt(process.env.PORT) || 8080;
