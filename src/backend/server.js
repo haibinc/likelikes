@@ -17,7 +17,7 @@ const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 const fs = require('fs');
 const https = require('https');
-const file = fs.readFileSync('./76CDD24B8809CC17F145778189E7E20D.txt')
+const file = fs.readFileSync('./D7EA86285258ABA8816330CA044C7545.txt')
 const key = fs.readFileSync('private.key');
 const cert = fs.readFileSync('certificate.crt');
 app.use(cors());
@@ -32,9 +32,9 @@ const cred = {
     cert
 }
 
-app.get('/.well-known/pki-validation/76CDD24B8809CC17F145778189E7E20D.txt', (req, res) => {
+app.get('/.well-known/pki-validation/D7EA86285258ABA8816330CA044C7545.txt', (req, res) => {
     res.send(file)
-    res.sendFile('/home/ec2-user/likelikes/src/backend/76CDD24B8809CC17F145778189E7E20D.txt');
+    res.sendFile('/home/ec2-user/likelikes/src/backend/D7EA86285258ABA8816330CA044C7545.txt');
 })
 
 
