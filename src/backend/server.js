@@ -41,16 +41,6 @@ app.get("/", async (req, res) => {
     }
 })
 
-app.get('/.well-known/pki-validation/D7EA86285258ABA8816330CA044C7545.txt', async (req, res) => {
-    try{
-        res.sendFile('/home/ec2-user/likelikes/src/backend/D7EA86285258ABA8816330CA044C7545.txt');
-    } catch(error){
-        console.log(error);
-        res.send(error);
-    }
-})
-
-
 const s3 = new S3Client({
     credentials:{
         accessKeyId: process.env.REACT_APP_ACCESS_KEY,
