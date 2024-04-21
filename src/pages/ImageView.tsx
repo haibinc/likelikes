@@ -12,7 +12,7 @@ function ImageView() {
     const [likeText, setLikeText] = useState('LIKE')
     const [image, setImage] = useState<pictureForm>();
     const picTitle = useParams();
-    const baseUrl = 'https://13.52.214.140';
+    const baseUrl = 'https://3.101.36.103:8443';
 
     const deletePicture = async () => {
         try {

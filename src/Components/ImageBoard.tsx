@@ -11,7 +11,7 @@ const breakpointColumnsObj = {
 
 function ImageBoard() {
     const [images, setImages] = useState<pictureForm[]>([]);
-    const baseUrl = 'https://3.101.36.103';
+    const baseUrl = 'https://3.101.36.103:8443';
     const redirect = ChangeWeb();
 
     useEffect(() => {

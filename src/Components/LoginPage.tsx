@@ -24,7 +24,7 @@ function LoginPage({closeLogin} : LoginPageProps) {
 
     const submitForm = async(e: React.SyntheticEvent) => {
         e.preventDefault();
-        const baseUrl = 'https://3.101.36.103';
+        const baseUrl = 'https://3.101.36.103:8443';
         try{
             const res = await fetch(`${baseUrl}/submitLogin`, {
                     method: 'POST',

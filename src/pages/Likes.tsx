@@ -31,7 +31,7 @@ function Likes() {
     useEffect( () => {
         const fetchImages = async () => {
             try {
-                const baseUrl = 'https://3.101.36.103';
+                const baseUrl = 'https://3.101.36.103:8443';
                 const id = localStorage.getItem('userId')
                 const response = await fetch(`${baseUrl}/getLikes/${id}`, {
                     method: 'GET',

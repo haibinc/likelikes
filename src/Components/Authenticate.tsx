@@ -5,7 +5,7 @@ async function Authenticate() {
     const userId = localStorage.getItem('userId')
     if (token) {
         try {
-            const baseUrl = 'https://3.101.36.103';
+            const baseUrl = 'https://3.101.36.103:8443';
             const response = await fetch(`${baseUrl}/checkToken`, {
                 method: 'GET',
                 headers: {
