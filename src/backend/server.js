@@ -35,6 +35,7 @@ const cred = {
 app.get("/", async (req, res) => {
     try {
         res.send('thank you for working');
+        res.send("change")
         testDatabaseConnection();
     } catch (error) {
         res.send(error);
@@ -44,7 +45,6 @@ app.get("/", async (req, res) => {
 app.get('/.well-known/pki-validation/D7EA86285258ABA8816330CA044C7545.txt', async (req, res) => {
     try{
         res.send("DOES THIS WORK");
-        res.send("change")
         console.log('WHY');
         res.sendFile('/home/ec2-user/likelikes/src/backend/D7EA86285258ABA8816330CA044C7545.txt');
     } catch(error){
