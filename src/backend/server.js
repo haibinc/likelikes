@@ -33,7 +33,6 @@ const cred = {
 }
 
 app.get('/.well-known/pki-validation/D7EA86285258ABA8816330CA044C7545.txt', (req, res) => {
-    res.send(file)
     res.sendFile('/home/ec2-user/likelikes/src/backend/D7EA86285258ABA8816330CA044C7545.txt');
 })
 
