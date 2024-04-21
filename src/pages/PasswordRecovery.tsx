@@ -20,7 +20,7 @@ function PasswordRecovery() {
                 },
             })
             if(res.ok){
-                setMessage('i think ima do this later because it requires setting up a email system and that is not a core feature');
+                setMessage('WIP');
                 console.log('password recovered');
             }
             else if(!res.ok){

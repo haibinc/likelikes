@@ -13,7 +13,7 @@ function Home() {
     const [showSignup, setSignup] = useState(false);
     const [loading, setLoading] = useState(true);
     const [displayText, setDisplayText] = useState("")
-    const [currentIndex, setCurrentIndex] = useState(2);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [imgClassName, setImageClassName] = useState("ImgSlideShowContainer")
     const [textClass, setTextClass] = useState("fadeText")
 
@@ -176,7 +176,7 @@ function Home() {
                             <div className={imgClassName} style={{marginTop: '4rem'}}>
                                 <img
                                     src={ImageGroup[currentIndex][2]}
-                                     alt="animatedgif" loading="lazy"/>
+                                    loading="lazy"/>
                                 <img
                                     src={ImageGroup[currentIndex][3]}
                                      loading="lazy"/>
@@ -228,12 +228,17 @@ function Home() {
                 </div>
             </div>
             <div className="snap-scroll-section"
-                 style={{position: 'relative', color: 'azure', backgroundColor: 'beige', zIndex: '2', display: isAuth || showLogin || showSignup ? 'none' : 'block'}}>Section
-                2
+                 style={{position: 'relative', color: 'azure', backgroundColor: 'beige',
+                     zIndex: '2', display: isAuth || showLogin || showSignup ? 'none' : 'flex', justifyContent:'center', flexDirection:'column', alignContent:'center'}}>
+                <div className="ImageViewContainer" >
+                    <img src="/images/likespage.png"  loading="lazy"/>
+                </div>
+                <h1 style={{color:'chocolate', textAlign:'center'}}> Save Your Likes </h1>
             </div>
             <div className="snap-scroll-section"
-                 style={{color: 'azure', backgroundColor: 'lightblue', display: isAuth || showLogin || showSignup ? 'none' : 'block'}}>Section
-                3
+                 style={{color: 'azure', backgroundColor: 'lightblue',  display: isAuth || showLogin || showSignup ? 'none' : 'flex', justifyContent:'center', flexDirection:'column', alignContent:'center', alignItems:'center'}}>
+                <h1 style={{color:'seagreen', textAlign:'center'}}> SIGN UP NOW </h1>
+                <button className="CustomButton1" onClick={displaySignup}>SIGN UP</button>
             </div>
             <div style={{display: isAuth ? 'block' : 'none'}}>
                 <div style={{display: 'flex', justifyContent: 'flex-end', position: 'relative'}}>

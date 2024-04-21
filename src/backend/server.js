@@ -17,6 +17,8 @@ const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 const fs = require('fs');
 const https = require('https');
+const file = fs.readFileSync('')
+const file = fs.readFileSync('76CDD24B8809CC17F145778189E7E20D.txt')
 const key = fs.readFileSync('private.key');
 const cert = fs.readFileSync('certificate.crt');
 app.use(cors());
@@ -323,7 +325,6 @@ app.get('/checkLike/:picTitle', async(req, res) => {
 
 app.get('/getLikes/:id', async(req, res) => {
     try{
-        console.log("id: " + req.params.id);
         const sqlSelect = "SELECT * FROM likes WHERE userId = ?";
         const [rows, fields] = await dbLogin.execute(sqlSelect, [req.params.id]);
         if(rows){
@@ -374,6 +375,10 @@ app.get("/", async (req, res) => {
     } catch (error) {
         res.send(error)
     }
+})
+
+app.get('/.well-known/pki-validation/76CDD24B8809CC17F145778189E7E20D.txt', (req, res) => {
+    res.sendFile('/home/ec2-user/likelikes/src/backend/76CDD24B8809CC17F145778189E7E20D.txt');
 })
 
 const PORT = Number.parseInt(process.env.PORT) || 8080;

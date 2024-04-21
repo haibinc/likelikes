@@ -93,8 +93,8 @@ function Create() {
                 </button>
             </div>
             <div>
-                <h1>CREATE</h1>
-                <input type='file' accept="image/*" onChange={handleFileInput}/>
+                <h1 style={{display:'flex', justifyContent:'center'}}>CREATE</h1>
+                <input style={{marginLeft:'5rem', marginTop:'2rem'}}type='file' accept="image/*" onChange={handleFileInput}/>
                 <form className="FormContainer" method="POST" encType="multipart/form-data" style={{float: 'right', marginRight: '300px'}}>
                     <label htmlFor="title">Title</label>
                     <input type='title' placeholder='Add a title' onChange={handleTitle} name="title"
@@ -114,7 +114,7 @@ function Create() {
             </div>
             <div>
                 <img src={imgSource}
-                     style={{height: '10rem', width: '12rem', marginTop: '3rem', borderRadius: '2.5rem'}}/>
+                     style={{height: '10rem', width: '12rem', marginTop: '3rem', marginLeft:'5rem', borderRadius: '2.5rem'}}/>
             </div>
         </div>
     );

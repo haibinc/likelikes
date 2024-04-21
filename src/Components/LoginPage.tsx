@@ -32,6 +32,7 @@ function LoginPage({closeLogin} : LoginPageProps) {
                     body: JSON.stringify(state),
                     headers: {
                     'Content-Type': 'application/json',
+
                 },
             })
             if(res.ok)
